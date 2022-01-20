@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { isThisTypeNode } from 'typescript';
+import { Recurso } from '../models/Recurso';
+import { RecursoService } from '../services/recurso.service';
 
 @Component({
   selector: 'app-recurso',
@@ -7,9 +10,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecursoComponent implements OnInit {
 
-  constructor() { }
 
+
+  constructor(private _recursoService : RecursoService) { }
+
+
+    
+  deleteId!: number;
+  recurso: Recurso = new Recurso;
+  recursos: Recurso[] = [];
+  
   ngOnInit(): void {
+    this.retrieveAllRecursos()
   }
+
+  retrieveAllRecursos(): void {
+    this._recursoService.retrieveAll().subscribe({
+      next: (recurso: any) => {
+        this.recursos = recurso;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });}
+
+    deleteRecursos() {
+      this._recursoService.deleteRecursos(this.deleteId).subscribe(next => {this.ngOnInit(); this.closePopup();});    
+    }
+
+    displayStyle = "none";
+  
+    openPopup(id: number): void {
+      this.deleteId = id;
+      this.displayStyle = "block";
+    }
+
+    closePopup() {
+      this.displayStyle = "none";
+    }
 
 }

@@ -5,11 +5,13 @@ import { AppComponent } from './app.component';
 import { CursoComponent } from './curso/curso.component';
 import { EventoComponent } from './evento/evento.component';
 import { RecursoComponent } from './recurso/recurso.component';
-//import { NavbarComponent } from './shared/components/navbar/navbar.component';
-//import { FooterComponent } from './shared/components/footer/footer.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 import { routing } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RecursoAddComponent } from './recurso/recurso-add/recurso-add.component';
+import { EventoAddComponent } from './evento/evento-add/evento-add.component';
 
 @NgModule({
   declarations: [	
@@ -17,9 +19,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CursoComponent,
     EventoComponent,
     RecursoComponent,
-    //NavbarComponent,
-    //FooterComponent,
-    HomeComponent
+    NavbarComponent,
+    FooterComponent,
+    HomeComponent,
+    RecursoAddComponent,
+    EventoAddComponent
    ],
   imports: [
     BrowserModule,

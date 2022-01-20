@@ -9,11 +9,20 @@ import { Evento } from '../models/Evento';
 export class EventoService {
 
 
-constructor(private httpClient: HttpClient) {}
-private eventoUrl='http://localhost:8080/evento/recentes'
+  constructor(private httpClient: HttpClient) { }
+  private eventoRecentUrl = 'http://localhost:8080/evento/recentes'
+  private eventoUrl = 'http://localhost:8080/evento'
 
-retrieveAll(): Observable<Evento>{
-  return this.httpClient.get<Evento>(this.eventoUrl);
-}
+  retrieveRecents(): Observable<Evento> {
+    return this.httpClient.get<Evento>(this.eventoRecentUrl);
+  }
+  retrieveAll(): Observable<Evento> {
+    return this.httpClient.get<Evento>(this.eventoUrl);
+  }
+
+  deleteEvento(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.eventoUrl}/${id}`);
+  }
+
 
 }

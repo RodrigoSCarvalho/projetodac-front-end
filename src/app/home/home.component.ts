@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   }
 
   retrieveAllEventos(): void {
-    this._eventosService.retrieveAll().subscribe({
+    this._eventosService.retrieveRecents().subscribe({
       next: (evento: any)=> {
       this.eventos = evento;
     },
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
   }
 
     retrieveAllCursos(): void {
-      this._cursoService.retrieveAll().subscribe({
+      this._cursoService.retrieveRecents().subscribe({
         next: (curso: any)=> {
         this.cursos = curso;
       },

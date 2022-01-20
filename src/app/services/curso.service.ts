@@ -9,10 +9,18 @@ import { Curso } from '../models/Curso';
 export class CursoService {
 
   constructor(private httpClient: HttpClient) {}
-  private eventoUrl='http://localhost:8080/curso/recentes'
+  private cursoRecentUrl='http://localhost:8080/curso/recentes'
+  private cursoUrl='http://localhost:8080/curso'
   
-  retrieveAll(): Observable<Curso>{
-    return this.httpClient.get<Curso>(this.eventoUrl);
+  retrieveRecents(): Observable<Curso>{
+    return this.httpClient.get<Curso>(this.cursoRecentUrl);
   }
 
+  retrieveAll(): Observable<Curso>{
+    return this.httpClient.get<Curso>(this.cursoUrl);
+  }
+
+  deleteCurso(id: number): Observable<any> {
+    return this.httpClient.delete<any>(`${this.cursoUrl}/${id}`);
+  }
 }
