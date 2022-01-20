@@ -1,0 +1,57 @@
+<router-outlet></router-outlet>
+<div class="container text-center bg-light">
+  <!--<app-navbar></app-navbar>-->
+  <div class="row">
+      <p class="text-center display-5">API Recursos Educacionais</p>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Recursos</th>   
+          </tr>
+        </thead>
+        <tbody *ngFor="let resourse of recursos"> 
+          <tr>
+            <td>{{resourse.titulo}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Eventos</th>   
+          </tr>
+        </thead>
+        <tbody *ngFor="let events of eventos"> 
+          <tr>
+            <td>{{events.titulo}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">Cursos</th>   
+          </tr>
+        </thead>
+        <tbody *ngFor="let courses of cursos"> 
+          <tr>
+            <td>{{courses.titulo}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <a type="button" class="btn btn-outline-secondary" href="/recursos">Listar recursos</a>
+    </div>
+  </div>
+  <!--<app-footer></app-footer> -->
+</div>
