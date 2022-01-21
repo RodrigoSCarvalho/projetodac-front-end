@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Curso } from '../models/Curso';
+import { CursoService } from '../services/curso.service';
 
 @Component({
   selector: 'app-curso',
@@ -7,9 +9,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CursoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _cursoService: CursoService) { }
 
+
+    
+  deleteId!: number;
+  curso: Curso = new Curso;
+  cursos: Curso[] = [];
+  
   ngOnInit(): void {
+    this.retrieveAllCursos()
   }
+
+  retrieveAllCursos(): void {
+    this._cursoService.retrieveAll().subscribe({
+      next: (curso: any) => {
+        this.cursos = curso;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });}
+
+    deleteCursos() {
+      this._cursoService.deleteCurso(this.deleteId).subscribe(next => {this.ngOnInit(); this.closePopup();});    
+    }
+
+    displayStyle = "none";
+  
+    openPopup(id: number): void {
+      this.deleteId = id;
+      this.displayStyle = "block";
+    }
+
+    closePopup() {
+      this.displayStyle = "none";
+    }
 
 }

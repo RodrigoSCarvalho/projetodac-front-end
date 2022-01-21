@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Curso } from '../models/Curso';
 
 @Injectable({
@@ -22,5 +22,9 @@ export class CursoService {
 
   deleteCurso(id: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.cursoUrl}/${id}`);
+  }
+
+  postCurso(curso: Curso): Observable<any> {
+    return this.httpClient.post<Curso>(this.cursoUrl, curso).pipe(take(1));
   }
 }

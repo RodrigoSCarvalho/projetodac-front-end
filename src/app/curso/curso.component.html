@@ -1,1 +1,72 @@
-<p>curso works!</p>
+<router-outlet></router-outlet>
+<div class="container bg-light">
+  <app-navbar></app-navbar>
+  <div class="row">
+    <p class="text-center display-5">Cursos</p>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Imagem</th>
+            <th scope="col">Título</th>
+            <th scope="col">Descricao</th>
+            <th scope="col">Data de Registro</th>
+            <th scope="col">View</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let course of cursos">
+          <tr class="info-user">
+            <td>{{course.id}}</td>
+            <td><img src={{course.imagem}} width="64" height="64" alt= /></td>
+            <td>{{course.titulo}}</td>
+            <td>{{course.descricao}}</td>
+            <td>{{course.data_registro}}</td>
+            <td><img src="../../assets/view.svg" alt="View"></td>
+            <td><img src="../../assets/edit.svg" alt="Edit"></td>
+            <td><button class="btn-excluir" name={{course.titulo}} value={{course.id}}
+                (click)="openPopup(course.id)" style="background: transparent; border: none;"><img
+                  src="../../assets/delete.svg" alt="Delete" data-bs-toggle="modal"
+                  data-bs-target="#modalExcluir" /></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col d-flex justify-content-center">
+      <a type="button" class="btn btn-outline-secondary" routerLink="add">Cadastrar Curso</a>
+    </div>
+  </div>
+
+
+  <app-footer></app-footer>
+
+
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Atenção!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePopup()"
+            style="border: none; background: transparent;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente excluir o Curso?</p>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary text-center" data-dismiss="modal"
+            (click)="closePopup()">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="deleteCursos()">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

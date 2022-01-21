@@ -1,6 +1,7 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { CursoAddComponent } from './curso/curso-add/curso-add.component';
 import { CursoComponent } from './curso/curso.component';
 import { EventoAddComponent } from './evento/evento-add/evento-add.component';
 import { EventoComponent } from './evento/evento.component';
@@ -19,7 +20,10 @@ const routes: Routes = [
     path: 'eventos', children: [{ path: '', component: EventoComponent },
     { path: 'add', component: EventoAddComponent },]
   },
-  { path: 'cursos', component: CursoComponent },
+  {
+    path: 'cursos', children: [{ path: '', component: CursoComponent },
+    { path: 'add', component: CursoAddComponent }]
+  },
 ]
 
 export const routing = RouterModule.forRoot(routes);

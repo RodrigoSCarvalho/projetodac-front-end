@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RecursoAddComponent } from './recurso/recurso-add/recurso-add.component';
 import { EventoAddComponent } from './evento/evento-add/evento-add.component';
+import { CursoAddComponent } from './curso/curso-add/curso-add.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [	
@@ -23,13 +25,15 @@ import { EventoAddComponent } from './evento/evento-add/evento-add.component';
     FooterComponent,
     HomeComponent,
     RecursoAddComponent,
-    EventoAddComponent
+    EventoAddComponent,
+    CursoAddComponent,    
    ],
   imports: [
     BrowserModule,
     HttpClientModule,
     routing,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
