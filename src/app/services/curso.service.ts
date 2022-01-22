@@ -12,6 +12,8 @@ export class CursoService {
   private cursoRecentUrl='http://localhost:8080/curso/recentes'
   private cursoUrl='http://localhost:8080/curso'
   
+
+  
   retrieveRecents(): Observable<Curso>{
     return this.httpClient.get<Curso>(this.cursoRecentUrl);
   }
@@ -26,5 +28,9 @@ export class CursoService {
 
   postCurso(curso: Curso): Observable<any> {
     return this.httpClient.post<Curso>(this.cursoUrl, curso).pipe(take(1));
+  }
+
+  loadById(id: number): Observable<any> {
+    return this.httpClient.get<Curso>(`${this.cursoUrl}/${id}`).pipe(take(1));
   }
 }

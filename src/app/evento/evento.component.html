@@ -9,27 +9,23 @@
       <table class="table table-dark">
         <thead>
           <tr>
-            <th scope="col">#</th>
             <th scope="col">Imagem</th>
             <th scope="col">Título</th>
             <th scope="col">Descricao</th>
             <th scope="col">Data de Criação</th>
             <th scope="col">Data Fim</th>
             <th scope="col">View</th>
-            <th scope="col">Edit</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody *ngFor="let events of eventos">
           <tr class="info-user">
-            <td>{{events.id}}</td>
             <td><img src={{events.imagem}} width="40" height="40" alt= /></td>
             <td>{{events.titulo}}</td>
             <td>{{events.descricao}}</td>
             <td>{{events.data_criacao}}</td>
             <td>{{events.data_fim}}</td>
-            <td><img src="../../assets/view.svg" alt="View"></td>
-            <td><img src="../../assets/edit.svg" alt="Edit"></td>
+            <td><button (click)="onView(events.id)" style="background: transparent; border: none;"><img src="../../assets/view.svg" alt="View" ></button></td>
             <td><button class="btn-excluir" name={{events.titulo}} value={{events.id}}
                 (click)="openPopup(events.id)" style="background: transparent; border: none;"><img
                   src="../../assets/delete.svg" alt="Delete" data-bs-toggle="modal"

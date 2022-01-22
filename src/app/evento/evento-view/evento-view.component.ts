@@ -1,24 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, switchMap } from 'rxjs';
+import { Evento } from 'src/app/models/Evento';
 import { EventoService } from 'src/app/services/evento.service';
 import { Location } from '@angular/common';
-import { map, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { Evento } from 'src/app/models/Evento';
 
 @Component({
-  selector: 'app-evento-add',
-  templateUrl: './evento-add.component.html',
-  styleUrls: ['./evento-add.component.css'],
+  selector: 'app-evento-view',
+  templateUrl: './evento-view.component.html',
+  styleUrls: ['./evento-view.component.css'],
 })
-export class EventoAddComponent implements OnInit {
+export class EventoViewComponent implements OnInit {
   form!: FormGroup;
   submmited = false;
+  editId!: number;
+
   constructor(
     private formBuilder: FormBuilder,
     private _eventoService: EventoService,
     private _location: Location,
     private route: ActivatedRoute,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +31,8 @@ export class EventoAddComponent implements OnInit {
         switchMap((id) => this._eventoService.loadById(id))
       )
       .subscribe((evento) => this.updateForm(evento));
+
+    this.route.params.subscribe((params) => (this.editId = params['id']));
 
     this.form = this.formBuilder.group({
       id: [null],
@@ -39,31 +44,20 @@ export class EventoAddComponent implements OnInit {
     });
   }
 
-  updateForm(evento: Evento): void{
-    this.form.patchValue({ 
+  updateForm(evento: Evento): void {
+    this.form.patchValue({
       id: evento.id,
       titulo: evento.titulo,
       descricao: evento.descricao,
       imagem: evento.imagem,
       data_criacao: evento.data_criacao,
       data_fim: evento.data_fim,
-    })
+    });
   }
 
-  onSubmit(): void {
-    this.submmited = true;
-    if (this.form.valid) {
-      this._eventoService.postEvento(this.form.value).subscribe(
-        (success) => {
-          this._location.back();
-        },
-        (error) => console.log(error),
-        () => console.log('request OK')
-      );
-    }
-  }
-  onCancel(): void {
-    this.submmited = false;
-    this.form.reset();
+  onEdit(): void {
+    this._router.navigate(['editar', this.editId], {
+      relativeTo: this.route.parent,
+    });
   }
 }

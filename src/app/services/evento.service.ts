@@ -28,5 +28,8 @@ export class EventoService {
     return this.httpClient.post<Evento>(this.eventoUrl, evento).pipe(take(1));
   }
 
+  loadById(id: number): Observable<any> {
+    return this.httpClient.get<Evento>(`${this.eventoUrl}/${id}`).pipe(take(1));
+  }
 
 }

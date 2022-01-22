@@ -1,0 +1,79 @@
+<div class="container bg-light">
+  <app-navbar></app-navbar>
+  <div class="row">
+    <p class="text-center display-6">Cursos - Detalhes</p>
+  </div>
+  <div class="row d-flex">
+    <div class="col d-flex justify-content-center">
+      <form [formGroup]="form">
+        <div class="mb-3">
+          <label for="idInput" class="form-label">Id</label>
+          <input
+            type="text"
+            class="form-control"
+            id="idInput"
+            formControlName="id"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="tituloInput" class="form-label">Título</label>
+          <input
+            type="text"
+            class="form-control"
+            id="tituloInput"
+            formControlName="titulo"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="descricaoInput" class="form-label">Descrição</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descricaoInput"
+            formControlName="descricao"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="imagemInput" class="form-label">Imagem</label>
+          <input
+            type="email"
+            class="form-control"
+            id="imagemInput"
+            aria-describedby="imagemHelp"
+            formControlName="imagem"
+            readonly
+          />
+          <div id="imagemHelp" class="form-text">
+            O link da imagem hospedada online.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="datacriacaoInput" class="form-label"
+            >Data de Registro</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="datacriacaoInput"
+            formControlName="data_registro"
+            readonly
+          />
+        </div>
+        <div class="mb-3 text-center">
+          <button
+            type="button"
+            class="btn btn-warning align-center"
+            (click)="onEdit()"
+          >
+            Editar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

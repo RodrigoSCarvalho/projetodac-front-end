@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Evento } from '../models/Evento';
 import { EventoService } from '../services/evento.service';
 
 @Component({
   selector: 'app-evento',
   templateUrl: './evento.component.html',
-  styleUrls: ['./evento.component.css']
+  styleUrls: ['./evento.component.css'],
 })
 export class EventoComponent implements OnInit {
+  constructor(
+    private _eventoService: EventoService,
+    private _router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-  constructor(private _eventoService : EventoService) { }
-
-
-    
   deleteId!: number;
-  evento: Evento = new Evento;
+  evento: Evento = new Evento();
   eventos: Evento[] = [];
-  
+
   ngOnInit(): void {
-    this.retrieveAllEventos()
+    this.retrieveAllEventos();
   }
 
   retrieveAllEventos(): void {
@@ -29,21 +31,28 @@ export class EventoComponent implements OnInit {
       error: (err) => {
         alert('Error: ' + err);
       },
-    });}
+    });
+  }
 
-    deleteEventos() {
-      this._eventoService.deleteEvento(this.deleteId).subscribe(next => {this.ngOnInit(); this.closePopup();});    
-    }
+  deleteEventos() {
+    this._eventoService.deleteEvento(this.deleteId).subscribe((next) => {
+      this.ngOnInit();
+      this.closePopup();
+    });
+  }
 
-    displayStyle = "none";
-  
-    openPopup(id: number): void {
-      this.deleteId = id;
-      this.displayStyle = "block";
-    }
+  displayStyle = 'none';
 
-    closePopup() {
-      this.displayStyle = "none";
-    }
+  openPopup(id: number): void {
+    this.deleteId = id;
+    this.displayStyle = 'block';
+  }
 
+  closePopup() {
+    this.displayStyle = 'none';
+  }
+
+  onView(id: number): void {
+    this._router.navigate(['view', id], { relativeTo: this.route });
+  }
 }
