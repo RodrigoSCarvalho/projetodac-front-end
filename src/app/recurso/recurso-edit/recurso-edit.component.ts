@@ -16,7 +16,9 @@ import { Recurso } from 'src/app/models/Recurso';
 export class RecursoEditComponent implements OnInit {
   autores: Autor[] = [];
   recursoId!: number;
-  palavras: string[] = [];
+  palavrasChave: string[] = [];
+  recursos: Recurso[] = [];
+
   constructor(
     private _autorService: AutorService,
     private formBuilder: FormBuilder,
@@ -32,6 +34,7 @@ export class RecursoEditComponent implements OnInit {
     this.recursoId = this.route.snapshot.params['id'];
 
     this.retrieveAllAutores();
+    this.retrieveRecurso();
 
     this.route.params
       .pipe(
@@ -44,7 +47,7 @@ export class RecursoEditComponent implements OnInit {
       id: [null],
       titulo: [null, [Validators.minLength(2), Validators.maxLength(200)]],
       descricao: [null, [Validators.minLength(2), Validators.maxLength(400)]],
-      palavras_chave: [this.palavras] ,
+      palavras_chave: [this.palavrasChave] ,
       imagem: [null, [Validators.minLength(2)]],
       link: [null, [Validators.minLength(2)]],
       data_criacao: [
@@ -71,10 +74,21 @@ export class RecursoEditComponent implements OnInit {
     });
   }
 
+  retrieveRecurso(): void {
+    this._recursoService.loadById(this.recursoId).subscribe({
+      next: (recurso: any) => {
+        this.recursos = recurso;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });
+  }
+
   onSubmit(): void {
     this.submmited = true;
     if (this.form.valid) {
-      console.log(this.palavras)
+      console.log(this.palavrasChave)
       //this.form.controls['palavras_chave'].patchValue(this.palavras)
       this._recursoService.updateRecurso(this.recursoId, this.form.value).subscribe(
         (success) => {
@@ -107,8 +121,8 @@ export class RecursoEditComponent implements OnInit {
 */
   addPalavras(palavra: string){
     console.log(palavra);
-    this.palavras.push(palavra);
-    console.log(this.palavras);
+    this.palavrasChave.push(palavra);
+    console.log(this.palavrasChave);
     this.inputPalavras.nativeElement.value = '';
     }
 

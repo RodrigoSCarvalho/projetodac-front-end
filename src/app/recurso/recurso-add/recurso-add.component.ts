@@ -8,7 +8,6 @@ import { Location } from '@angular/common';
 import { map, switchMap } from 'rxjs';
 import { Recurso } from 'src/app/models/Recurso';
 
-
 @Component({
   selector: 'app-recurso-add',
   templateUrl: './recurso-add.component.html',
@@ -17,7 +16,7 @@ import { Recurso } from 'src/app/models/Recurso';
 export class RecursoAddComponent implements OnInit {
   autores: Autor[] = [];
   autorId!: number;
-  palavras: string[] = [];
+  palavrasChave: string[] = [];
   constructor(
     private _autorService: AutorService,
     private formBuilder: FormBuilder,
@@ -31,6 +30,7 @@ export class RecursoAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.retrieveAllAutores();
+    this.palavrasChave;
 
     this.route.params
       .pipe(
@@ -43,13 +43,10 @@ export class RecursoAddComponent implements OnInit {
       id: [null],
       titulo: [null, [Validators.minLength(2), Validators.maxLength(200)]],
       descricao: [null, [Validators.minLength(2), Validators.maxLength(400)]],
-      palavras_chave: [this.palavras] ,
+      palavras_chave: [this.palavrasChave],
       imagem: [null, [Validators.minLength(2)]],
       link: [null, [Validators.minLength(2)]],
-      data_criacao: [
-        null,
-        [Validators.minLength(8), Validators.maxLength(12)],
-      ],
+      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
       data_registro: [
         null,
         [Validators.minLength(8), Validators.maxLength(12)],
@@ -73,7 +70,7 @@ export class RecursoAddComponent implements OnInit {
   onSubmit(): void {
     this.submmited = true;
     if (this.form.valid) {
-      console.log(this.palavras)
+      console.log(this.palavrasChave);
       //this.form.controls['palavras_chave'].patchValue(this.palavras)
       this._recursoService.saveRecurso(this.autorId, this.form.value).subscribe(
         (success) => {
@@ -89,10 +86,10 @@ export class RecursoAddComponent implements OnInit {
     this.form.reset();
   }
 
-  onChange(id: number){
+  onChange(id: number) {
     this.autorId = id;
   }
-/*
+  /*
   get palavrasChave() : FormArray {
     return this.form.get("palavras_chave") as FormArray
   }
@@ -107,12 +104,24 @@ export class RecursoAddComponent implements OnInit {
   this.palavrasChave.push(this.newPalavrasChave());
 }
 */
-  addPalavras(palavra: string){
+  addPalavras(palavra: string) {
     console.log(palavra);
-    this.palavras.push(palavra);
-    console.log(this.palavras);
+    this.palavrasChave.push(palavra);
+    console.log(this.palavrasChave);
     this.inputPalavras.nativeElement.value = '';
+  }
+
+  removePalavras(): void{
+    if(this.palavrasChave.length > 0){
+      this.palavrasChave.splice(-1);
     }
+  }
+
+  cleanPalavras(): void{
+    if(this.palavrasChave.length > 0){
+      this.palavrasChave = [];
+    }
+  }
 
   retrieveAllAutores(): void {
     this._autorService.retrieveAll().subscribe({

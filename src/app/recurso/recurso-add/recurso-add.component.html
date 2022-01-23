@@ -1,7 +1,7 @@
 <div class="container bg-light">
   <app-navbar></app-navbar>
   <div class="row"></div>
-  <div class="row d-flex">
+  <div class="row d-flex overflow-auto mb-5">
     <div class="col d-flex justify-content-center">
       <form
         (ngSubmit)="onSubmit()"
@@ -103,19 +103,41 @@
               aria-describedby="palavrasChaveHelp"
             />
             <button
-              class="btn btn-outline-secondary"
+              class="btn btn-outline-success"
               type="button"
               id="button-addon2"
               (click)="addPalavras(palavras.value)"
-              >
+            >
               +
             </button>
           </div>
-          <div id="palavrasChaveHelp" class="form-text">
-            Clique no botão '+' para adicionar cada palavra.
+          <div id="palavrasChaveHelp" class="form-text mb-3">
+            Clique no botão '+' para adicionar cada palavra. <br />
+          </div>
+          <div>
+            <li *ngFor="let item of palavrasChave">{{ item }}</li>
           </div>
         </div>
-        <div class="mb-3 text-center">
+          <div class="d-flex justify-content-center mb-3">
+            <button
+              class="btn btn-outline-secondary me-3"
+              type="button"
+              id="button-addon2"
+              (click)="removePalavras()"
+            >
+              Remover
+            </button>
+            <button
+            class="btn btn-outline-danger"
+            type="button"
+            id="button-addon2"
+            (click)="cleanPalavras()"
+          >
+            Limpar
+          </button>
+          </div>
+
+        <div class="mb-3 mt-3 text-center">
           <button type="submit" class="btn btn-dark align-center">
             Salvar
           </button>
@@ -124,5 +146,6 @@
     </div>
   </div>
 
-  <app-footer></app-footer>
+
 </div>
+<app-footer></app-footer>

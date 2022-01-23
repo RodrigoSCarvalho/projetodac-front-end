@@ -97,6 +97,10 @@
             <div id="palavrasChaveHelp" class="form-text">
               Clique no botão '+' para adicionar cada palavra.
             </div>
+            <div>
+              <li *ngFor="let item of palavrasChave">{{ item }}</li>
+              <li *ngFor="let p of recursos">{{ p.palavras_chave }}</li>
+            </div>
           </div>
           <div class="mb-3 text-center">
             <button type="submit" class="btn btn-dark align-center">
