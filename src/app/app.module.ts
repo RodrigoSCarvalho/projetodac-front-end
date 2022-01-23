@@ -16,6 +16,9 @@ import { CursoAddComponent } from './curso/curso-add/curso-add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CursoViewComponent } from './curso/curso-view/curso-view.component';
 import { EventoViewComponent } from './evento/evento-view/evento-view.component';
+import { FormsModule } from '@angular/forms';
+import { RecursoViewComponent } from './recurso/recurso-view/recurso-view.component';
+import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.component';
 
 @NgModule({
   declarations: [	
@@ -30,14 +33,17 @@ import { EventoViewComponent } from './evento/evento-view/evento-view.component'
     EventoAddComponent,
     CursoAddComponent,
     CursoViewComponent,
-    EventoViewComponent,    
+    EventoViewComponent,
+    RecursoViewComponent,
+    RecursoEditComponent,    
    ],
   imports: [
     BrowserModule,
     HttpClientModule,
     routing,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -16,6 +16,7 @@ export class EventoComponent implements OnInit {
   ) {}
 
   deleteId!: number;
+  eventoTitulo!: string;
   evento: Evento = new Evento();
   eventos: Evento[] = [];
 
@@ -43,7 +44,8 @@ export class EventoComponent implements OnInit {
 
   displayStyle = 'none';
 
-  openPopup(id: number): void {
+  openPopup(id: number, titulo: string): void {
+    this.eventoTitulo = titulo;
     this.deleteId = id;
     this.displayStyle = 'block';
   }

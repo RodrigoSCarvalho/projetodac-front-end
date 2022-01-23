@@ -1,8 +1,8 @@
-import { PalavraChaves } from "./PalavrasChave";
+import { PalavrasChave } from "./PalavrasChave";
 
 export class Recurso {
     'id': number;
-    'palavras_chave'?: PalavraChaves[];
+    'palavras_chave'?: PalavrasChave[];
     'titulo'?: string;
     'descricao'?: string;
     'link'?: string;

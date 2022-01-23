@@ -1,22 +1,21 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Autor } from 'src/app/models/Autor';
 import { AutorService } from 'src/app/services/autor.service';
 import { RecursoService } from 'src/app/services/recurso.service';
-import { Location } from '@angular/common';
+import { Location } from '@angular/common'
+import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { Recurso } from 'src/app/models/Recurso';
 
-
 @Component({
-  selector: 'app-recurso-add',
-  templateUrl: './recurso-add.component.html',
-  styleUrls: ['./recurso-add.component.css'],
+  selector: 'app-recurso-edit',
+  templateUrl: './recurso-edit.component.html',
+  styleUrls: ['./recurso-edit.component.css']
 })
-export class RecursoAddComponent implements OnInit {
+export class RecursoEditComponent implements OnInit {
   autores: Autor[] = [];
-  autorId!: number;
+  recursoId!: number;
   palavras: string[] = [];
   constructor(
     private _autorService: AutorService,
@@ -30,6 +29,8 @@ export class RecursoAddComponent implements OnInit {
   @ViewChild('palavras') inputPalavras: any;
 
   ngOnInit(): void {
+    this.recursoId = this.route.snapshot.params['id'];
+
     this.retrieveAllAutores();
 
     this.route.params
@@ -75,7 +76,7 @@ export class RecursoAddComponent implements OnInit {
     if (this.form.valid) {
       console.log(this.palavras)
       //this.form.controls['palavras_chave'].patchValue(this.palavras)
-      this._recursoService.saveRecurso(this.autorId, this.form.value).subscribe(
+      this._recursoService.updateRecurso(this.recursoId, this.form.value).subscribe(
         (success) => {
           this._location.back();
         },
@@ -89,9 +90,6 @@ export class RecursoAddComponent implements OnInit {
     this.form.reset();
   }
 
-  onChange(id: number){
-    this.autorId = id;
-  }
 /*
   get palavrasChave() : FormArray {
     return this.form.get("palavras_chave") as FormArray

@@ -1,56 +1,128 @@
 <div class="container bg-light">
-    <app-navbar></app-navbar>
-    <div class="row">
-    </div>
-    <div class="row d-flex">
-      <div class="col d-flex justify-content-center">
-        <form>
-          <div class="mb-3">
-            <label for="selectAutor" class="form-label">Selecione o autor</label>
-            <select class="form-select" id="selectAutor" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+  <app-navbar></app-navbar>
+  <div class="row"></div>
+  <div class="row d-flex">
+    <div class="col d-flex justify-content-center">
+      <form
+        (ngSubmit)="onSubmit()"
+        class="needs-validation"
+        novalidate
+        [formGroup]="form"
+        *ngIf="form"
+      >
+        <div class="mb-3">
+          <label for="selectAutor" class="form-label">Selecione o autor</label>
+          <select
+            class="form-select"
+            id="selectAutor"
+            aria-label="Default select example"
+          >
+            <option>Selecione</option>
+            <option
+              *ngFor="let author of autores"
+              value="{{ author.id }}"
+              (click)="onChange(author.id)"
+            >
+              {{ author.nome }}
+            </option>
           </select>
         </div>
-          <div class="mb-3">
-            <label for="palavrasChaveInput" class="form-label">Palavras-Chave</label>
-            <input type="email" class="form-control" id="palavrasChaveInput" aria-describedby="palavrasChaveHelp">
-            <div id="palavrasChaveHelp" class="form-text">Passe todas as palavras-chave juntos.</div>
+
+        <div class="mb-3">
+          <label for="tituloInput" class="form-label">Título</label>
+          <input
+            type="text"
+            class="form-control"
+            id="tituloInput"
+            formControlName="titulo"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="descricaoInput" class="form-label">Descrição</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descricaoInput"
+            formControlName="descricao"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="linkInput" class="form-label">Link</label>
+          <input
+            type="text"
+            class="form-control"
+            id="linkInput"
+            formControlName="link"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="imagemInput" class="form-label">Imagem</label>
+          <input
+            type="email"
+            class="form-control"
+            id="imagemInput"
+            aria-describedby="imagemHelp"
+            formControlName="imagem"
+          />
+          <div id="imagemHelp" class="form-text">
+            Envie o link de uma imagem hospedada online.
           </div>
-          <div class="mb-3">
-            <label for="tituloInput" class="form-label">Título</label>
-            <input type="text" class="form-control" id="tituloInput">
+        </div>
+        <div class="mb-3">
+          <label for="datacriacaoInput" class="form-label"
+            >Data de Criação</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="datacriacaoInput"
+            formControlName="data_criacao"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="dataregistroInput" class="form-label"
+            >Data de Registro</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="dataregistroInput"
+            formControlName="data_registro"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="palavrasChaveInput" class="form-label"
+            >Palavras-Chave</label
+          >
+          <div class="input-group">
+            <input
+              #palavras
+              type="email"
+              class="form-control"
+              id="palavrasChaveInput"
+              aria-describedby="palavrasChaveHelp"
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+              (click)="addPalavras(palavras.value)"
+              >
+              +
+            </button>
           </div>
-          <div class="mb-3">
-            <label for="descricaoInput" class="form-label">Descrição</label>
-            <input type="text" class="form-control" id="descricaoInput">
+          <div id="palavrasChaveHelp" class="form-text">
+            Clique no botão '+' para adicionar cada palavra.
           </div>
-          <div class="mb-3">
-            <label for="linkInput" class="form-label">Link</label>
-            <input type="text" class="form-control" id="linkInput">
-          </div>
-          <div class="mb-3">
-            <label for="imagemInput" class="form-label">Imagem</label>
-            <input type="email" class="form-control" id="imagemInput" aria-describedby="imagemHelp">
-            <div id="imagemHelp" class="form-text">Envie o link de uma imagem hospedada online.</div>
-          </div>
-          <div class="mb-3">
-            <label for="datacriacaoInput" class="form-label">Data de Criação</label>
-            <input type="text" class="form-control" id="datacriacaoInput">
-          </div>
-          <div class="mb-4">
-            <label for="dataregistroInput" class="form-label">Data de Registro</label>
-            <input type="text" class="form-control" id="dataregistroInput">
-          </div>
-          <div class="mb-3 text-center">
-          <button type="submit" class="btn btn-dark align-center">Cadastrar</button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div class="mb-3 text-center">
+          <button type="submit" class="btn btn-dark align-center">
+            Salvar
+          </button>
+        </div>
+      </form>
     </div>
-  
-  
-  <app-footer></app-footer>
   </div>
+
+  <app-footer></app-footer>
+</div>

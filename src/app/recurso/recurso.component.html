@@ -17,7 +17,6 @@
             <th scope="col">Data de Criação</th>
             <th scope="col">Data de Registro</th>
             <th scope="col">View</th>
-            <th scope="col">Edit</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
@@ -30,10 +29,9 @@
             <td><a href={{resourse.link}} target="_blank">{{resourse.link}}</a></td>
             <td>{{resourse.data_criacao}}</td>
             <td>{{resourse.data_registro}}</td>
-            <td><img src="../../assets/view.svg" alt="View"></td>
-            <td><img src="../../assets/edit.svg" alt="Edit"></td>
+            <td><button (click)="onView(resourse.id)" style="background: transparent; border: none;"><img src="../../assets/view.svg" alt="View"></button></td>
             <td><button class="btn-excluir" name={{resourse.titulo}} value={{resourse.id}}
-                (click)="openPopup(resourse.id)" style="background: transparent; border: none;"><img
+                (click)="openPopup(resourse.id, resourse.titulo)" style="background: transparent; border: none;"><img
                   src="../../assets/delete.svg" alt="Delete" data-bs-toggle="modal"
                   data-bs-target="#modalExcluir" /></button></td>
           </tr>
@@ -66,7 +64,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Deseja realmente excluir o recurso?</p>
+          <p>Deseja realmente excluir o recurso {{recursoTitulo}}?</p>
         </div>
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary text-center" data-dismiss="modal"

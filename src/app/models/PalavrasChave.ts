@@ -1,3 +1,3 @@
-export class PalavraChaves {
-    'palavra_chave': string;
+export class PalavrasChave {
+    'palavra_chave':  [];
   }

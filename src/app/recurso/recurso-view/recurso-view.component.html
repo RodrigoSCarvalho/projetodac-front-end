@@ -1,0 +1,108 @@
+<div class="container bg-light">
+    <app-navbar></app-navbar>
+    <div class="row"></div>
+    <div class="row d-flex">
+      <div class="col d-flex justify-content-center">
+        <form
+          class="needs-validation"
+          novalidate
+          [formGroup]="form"
+        >
+  
+          <div class="mb-3">
+            <label for="tituloInput" class="form-label">Título</label>
+            <input
+              type="text"
+              class="form-control"
+              id="tituloInput"
+              formControlName="titulo"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="descricaoInput" class="form-label">Descrição</label>
+            <input
+              type="text"
+              class="form-control"
+              id="descricaoInput"
+              formControlName="descricao"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="linkInput" class="form-label">Link</label>
+            <input
+              type="text"
+              class="form-control"
+              id="linkInput"
+              formControlName="link"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="imagemInput" class="form-label">Imagem</label>
+            <input
+              type="email"
+              class="form-control"
+              id="imagemInput"
+              aria-describedby="imagemHelp"
+              formControlName="imagem"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="datacriacaoInput" class="form-label"
+              >Data de Criação</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="datacriacaoInput"
+              formControlName="data_criacao"
+              readonly
+            />
+          </div>
+          <div class="mb-4">
+            <label for="dataregistroInput" class="form-label"
+              >Data de Registro</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="dataregistroInput"
+              formControlName="data_registro"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="palavrasChaveInput" class="form-label"
+              >Palavras-Chave</label
+            >
+            <div class="input-group">
+              <input
+                #palavras
+                type="email"
+                class="form-control"
+                id="palavrasChaveInput"
+                aria-describedby="palavrasChaveHelp"
+                formControlName="palavras_chave"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="mb-3 text-center">
+            <button
+              type="button"
+              class="btn btn-warning align-center"
+              (click)="onEdit()"
+            >
+              Editar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <app-footer></app-footer>
+  </div>
+  

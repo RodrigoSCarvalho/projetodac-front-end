@@ -16,6 +16,7 @@ export class CursoComponent implements OnInit {
   ) {}
 
   deleteId!: number;
+  cursoTitulo!: string;
   curso: Curso = new Curso();
   cursos: Curso[] = [];
 
@@ -43,8 +44,9 @@ export class CursoComponent implements OnInit {
 
   displayStyle = 'none';
 
-  openPopup(id: number): void {
+  openPopup(id: number, titulo: string): void {
     this.deleteId = id;
+    this.cursoTitulo = titulo;
     this.displayStyle = 'block';
   }
 

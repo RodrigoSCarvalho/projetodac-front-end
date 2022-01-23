@@ -21,7 +21,7 @@ export class EventoService {
   }
 
   deleteEvento(id: number): Observable<any> {
-    return this.httpClient.delete<any>(`${this.eventoUrl}/${id}`);
+    return this.httpClient.delete<any>(`${this.eventoUrl}/${id}`).pipe(take(1));;
   }
 
   postEvento(evento: Evento): Observable<any> {

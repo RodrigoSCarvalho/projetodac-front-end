@@ -25,7 +25,7 @@
             <td>{{course.data_registro}}</td>
             <td><button  (click)="onView(course.id)" style="background: transparent; border: none;"><img src="../../assets/view.svg" alt="View"></button></td>
             <td><button class="btn-excluir" name={{course.titulo}} value={{course.id}}
-                (click)="openPopup(course.id)" style="background: transparent; border: none;"><img
+                (click)="openPopup(course.id, course.titulo)" style="background: transparent; border: none;"><img
                   src="../../assets/delete.svg" alt="Delete" data-bs-toggle="modal"
                   data-bs-target="#modalExcluir" /></button></td>
           </tr>
@@ -54,7 +54,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Deseja realmente excluir o Curso?</p>
+          <p>Deseja realmente excluir o curso: {{cursoTitulo}}?</p>
         </div>
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary text-center" data-dismiss="modal"

@@ -9,6 +9,8 @@ import { EventoViewComponent } from './evento/evento-view/evento-view.component'
 import { EventoComponent } from './evento/evento.component';
 import { HomeComponent } from './home/home.component';
 import { RecursoAddComponent } from './recurso/recurso-add/recurso-add.component';
+import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.component';
+import { RecursoViewComponent } from './recurso/recurso-view/recurso-view.component';
 import { RecursoComponent } from './recurso/recurso.component';
 
 const routes: Routes = [
@@ -16,8 +18,10 @@ const routes: Routes = [
   {
     path: 'recursos',
     children: [
-      { path: 'add', component: RecursoAddComponent },
       { path: '', component: RecursoComponent },
+      { path: 'add', component: RecursoAddComponent },
+      { path: 'editar/:id', component: RecursoEditComponent },
+      { path: 'view/:id', component: RecursoViewComponent }, 
     ],
   },
   {
