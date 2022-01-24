@@ -1,3 +1,26 @@
 .d-flex form{
     flex-grow: 0.5;
   }
+  
+  .table-curved {
+    border-radius: 6px;
+    border-left:0px;
+}
+.table-curved th {
+    border-top: none;
+}
+.table-curved th:first-child {
+    border-radius: 6px 0 0 0;
+}
+.table-curved th:last-child {
+    border-radius: 0 6px 0 0;
+}
+.table-curved th:only-child{
+    border-radius: 6px 6px 0 0;
+}
+.table-curved tr:last-child  {
+    border-radius: 0 0 0 6px;
+}
+.table-curved tr:last-child {
+    border-radius: 0 0 6px 0;
+}

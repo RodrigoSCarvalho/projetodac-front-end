@@ -74,6 +74,36 @@
       </form>
     </div>
   </div>
+  <div class="row">
+    <p class="text-center fs-5"> Recursos do Curso </p>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-curved table-striped table-borderless table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Imagem</th>
+            <th scope="col">Título</th>
+            <th scope="col">Descricao</th>
+            <th scope="col">Palavras Chave</th>
+            <th scope="col">Link</th>
+            <th scope="col">Data de Criação</th>
+            <th scope="col">Data de Registro</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let resourse of recursos">
+          <tr class="info-user">
+            <td><img src={{resourse.imagem}} width="40" height="40" alt= /></td>
+            <td>{{resourse.titulo}}</td>
+            <td>{{resourse.descricao}}</td>
+            <td>{{resourse.palavras_chave}}</td>
+            <td><a href={{resourse.link}} target="_blank">{{resourse.link}}</a></td>
+            <td>{{resourse.data_criacao}}</td>
+            <td>{{resourse.data_registro}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   <app-footer></app-footer>
 </div>

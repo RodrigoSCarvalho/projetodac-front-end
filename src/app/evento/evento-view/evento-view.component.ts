@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs';
 import { Evento } from 'src/app/models/Evento';
 import { EventoService } from 'src/app/services/evento.service';
 import { Location } from '@angular/common';
+import { Recurso } from 'src/app/models/Recurso';
 
 @Component({
   selector: 'app-evento-view',
@@ -15,6 +16,8 @@ export class EventoViewComponent implements OnInit {
   form!: FormGroup;
   submmited = false;
   editId!: number;
+  eventos: Evento[] = [];
+  recursos: Recurso[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +28,8 @@ export class EventoViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
+    
     this.route.params
       .pipe(
         map((params: any) => params['id']),
@@ -42,6 +47,8 @@ export class EventoViewComponent implements OnInit {
       data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
       data_fim: [null, [Validators.minLength(8), Validators.maxLength(12)]],
     });
+
+    this.retrieveRecursos();
   }
 
   updateForm(evento: Evento): void {
@@ -52,6 +59,17 @@ export class EventoViewComponent implements OnInit {
       imagem: evento.imagem,
       data_criacao: evento.data_criacao,
       data_fim: evento.data_fim,
+    });
+  }
+
+  retrieveRecursos(): void {
+    this._eventoService.loadEventosRecursos(this.editId).subscribe({
+      next: (recurso: any) => {
+        this.recursos = recurso;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
     });
   }
 

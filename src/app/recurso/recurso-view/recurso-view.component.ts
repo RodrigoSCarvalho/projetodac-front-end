@@ -58,6 +58,7 @@ export class RecursoViewComponent implements OnInit {
     });
   }
 
+
   onEdit(): void {
     this._router.navigate(['editar', this.editId], {
       relativeTo: this.route.parent,

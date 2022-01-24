@@ -5,6 +5,7 @@ import { map, switchMap } from 'rxjs';
 import { Curso } from 'src/app/models/Curso';
 import { CursoService } from 'src/app/services/curso.service';
 import { Location } from '@angular/common';
+import { Recurso } from 'src/app/models/Recurso';
 
 @Component({
   selector: 'app-curso-view',
@@ -15,6 +16,7 @@ export class CursoViewComponent implements OnInit {
   form!: FormGroup;
   submmited = false;
   editId!: number;
+  recursos: Recurso[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,6 +47,8 @@ export class CursoViewComponent implements OnInit {
         [Validators.minLength(8), Validators.maxLength(12)],
       ],
     });
+
+    this.retrieveRecursos()
   }
 
   updateForm(curso: Curso): void {
@@ -62,4 +66,16 @@ export class CursoViewComponent implements OnInit {
       relativeTo: this.route.parent,
     });
   }
+
+  retrieveRecursos(): void {
+    this._cursoService.loadCursosRecursos(this.editId).subscribe({
+      next: (recurso: any) => {
+        this.recursos = recurso;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });
+  }
+
 }
