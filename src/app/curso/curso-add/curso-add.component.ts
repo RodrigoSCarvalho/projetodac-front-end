@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Curso } from 'src/app/models/Curso';
 import { map, switchMap } from 'rxjs';
+import { RecursoService } from 'src/app/services/recurso.service';
+import { Recurso } from 'src/app/models/Recurso';
 
 @Component({
   selector: 'app-curso-add',
@@ -14,15 +16,22 @@ import { map, switchMap } from 'rxjs';
 export class CursoAddComponent implements OnInit {
   form!: FormGroup;
   submmited = false;
+  associarRecurso = false;
+  recursoId!: number;
+  recursos: Recurso[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private _cursoService: CursoService,
     private _location: Location,
     private route: ActivatedRoute,
+    private _recursoService: RecursoService,
   ) {}
 
   ngOnInit(): void {
+
+    this.retrieveAllRecursos();
+
     this.route.params.pipe(map((params: any) =>  params['id']),
     switchMap(id => this._cursoService.loadById(id))
     ).subscribe(curso => this.updateForm(curso));
@@ -52,17 +61,50 @@ export class CursoAddComponent implements OnInit {
   onSubmit(): void {
     this.submmited = true;
     if (this.form.valid) {
-      this._cursoService.postCurso(this.form.value).subscribe(
-        (success) => {
-          this._location.back();
-        },
-        (error) => console.log(error),
-        () => console.log('request OK')
-      );
+        if(this.associarRecurso == false){
+          this._cursoService.postCurso(this.form.value).subscribe(
+            (success) => {
+              this._location.back();
+            },
+            (error) => console.log(error),
+            () => console.log('request OK')
+          );
+        }
+      else{
+        this._cursoService.postRecursoCurso(this.form.value, this.recursoId).subscribe(
+          (success) => {
+            this._location.back();
+          },
+          (error) => console.log(error),
+          () => console.log('request OK')
+        );
+
+      }
     }
   }
   onCancel(): void {
     this.submmited = false;
     this.form.reset();
   }
+
+  onChoice(): void {
+    this.associarRecurso = !this.associarRecurso;
+    console.log(this.associarRecurso);
+  }
+  
+  retrieveAllRecursos(): void {
+    this._recursoService.retrieveAll().subscribe({
+      next: (recurso: any) => {
+        this.recursos = recurso;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });
+  }
+
+  onChange(id: number) {
+    this.recursoId = id;
+  }
+
 }

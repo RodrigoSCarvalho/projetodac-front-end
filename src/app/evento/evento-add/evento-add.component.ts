@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import { map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Evento } from 'src/app/models/Evento';
+import { RecursoService } from 'src/app/services/recurso.service';
+import { Recurso } from 'src/app/models/Recurso';
 
 @Component({
   selector: 'app-evento-add',
@@ -14,14 +16,23 @@ import { Evento } from 'src/app/models/Evento';
 export class EventoAddComponent implements OnInit {
   form!: FormGroup;
   submmited = false;
+  associarRecurso = false;
+  recursoId!: number;
+  recursos: Recurso[] = [];
+  
   constructor(
     private formBuilder: FormBuilder,
     private _eventoService: EventoService,
     private _location: Location,
     private route: ActivatedRoute,
+    private _recursoService: RecursoService,
+
   ) {}
 
   ngOnInit(): void {
+
+    this.retrieveAllRecursos();
+
     this.route.params
       .pipe(
         map((params: any) => params['id']),
@@ -53,17 +64,47 @@ export class EventoAddComponent implements OnInit {
   onSubmit(): void {
     this.submmited = true;
     if (this.form.valid) {
-      this._eventoService.postEvento(this.form.value).subscribe(
-        (success) => {
-          this._location.back();
-        },
-        (error) => console.log(error),
-        () => console.log('request OK')
-      );
+      if(this.associarRecurso == false){
+        this._eventoService.postEvento(this.form.value).subscribe(
+          (success) => {
+            this._location.back();
+          },
+          (error) => console.log(error),
+          () => console.log('request OK')
+        );
+      }else{
+        this._eventoService.postRecursoEvento(this.form.value, this.recursoId || 0).subscribe(
+          (success) => {
+            this._location.back();
+          },
+          (error) => console.log(error),
+          () => console.log('request OK')
+        );
+      }
     }
   }
   onCancel(): void {
     this.submmited = false;
     this.form.reset();
+  }
+
+  onChoice(): void {
+    this.associarRecurso = !this.associarRecurso;
+    console.log(this.associarRecurso);
+  }
+  
+  retrieveAllRecursos(): void {
+    this._recursoService.retrieveAll().subscribe({
+      next: (recurso: any) => {
+        this.recursos = recurso;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });
+  }
+
+  onChange(id: number) {
+    this.recursoId = id;
   }
 }

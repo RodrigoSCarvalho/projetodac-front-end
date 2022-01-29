@@ -12,6 +12,7 @@ export class CursoService {
   constructor(private httpClient: HttpClient) {}
   private cursoRecentUrl='http://localhost:8080/curso/recentes'
   private cursoUrl='http://localhost:8080/curso'
+  private associateCursoEventoUrl='http://localhost:8080/recurso'
   
 
   
@@ -38,4 +39,9 @@ export class CursoService {
   loadCursosRecursos(id: number): Observable<any> {
     return this.httpClient.get<Recurso>(`${this.cursoUrl}/${id}/recursos`).pipe(take(1));
   }
+
+  postRecursoCurso(curso: Curso, recursoId: number): Observable<any> {
+    return this.httpClient.post<Curso>(`${this.associateCursoEventoUrl}/${recursoId}/curso`, curso).pipe(take(1));
+  }
+
 }

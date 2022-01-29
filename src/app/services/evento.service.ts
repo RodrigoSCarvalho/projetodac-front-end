@@ -13,6 +13,7 @@ export class EventoService {
   constructor(private httpClient: HttpClient) { }
   private eventoRecentUrl = 'http://localhost:8080/evento/recentes'
   private eventoUrl = 'http://localhost:8080/evento'
+  private associateEventoRecursoUrl='http://localhost:8080/recurso'
 
   retrieveRecents(): Observable<Evento> {
     return this.httpClient.get<Evento>(this.eventoRecentUrl);
@@ -35,5 +36,9 @@ export class EventoService {
 
   loadEventosRecursos(id: number): Observable<any> {
     return this.httpClient.get<Recurso>(`${this.eventoUrl}/${id}/recursos`).pipe(take(1));
+  }
+
+  postRecursoEvento(evento: Evento, recursoId: number): Observable<any> {
+    return this.httpClient.post<Evento>(`${this.associateEventoRecursoUrl}/${recursoId}/evento`, evento).pipe(take(1));
   }
 }

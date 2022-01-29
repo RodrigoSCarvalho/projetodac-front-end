@@ -74,12 +74,12 @@
       </form>
     </div>
   </div>
-  <div class="row">
+  <div class="row" *ngIf="recursos.length>0">
     <p class="text-center fs-5"> Recursos do Curso </p>
   </div>
   <div class="row">
     <div class="col">
-      <table class="table table-curved table-striped table-borderless table-hover">
+      <table class="table table-curved table-striped table-borderless table-hover" *ngIf="recursos.length>0">
         <thead>
           <tr>
             <th scope="col">Imagem</th>

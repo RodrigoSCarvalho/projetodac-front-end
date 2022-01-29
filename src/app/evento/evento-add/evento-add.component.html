@@ -7,6 +7,37 @@
       <div class="col d-flex justify-content-center">
         <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate [formGroup]="form">
           <div class="mb-3">
+            <label for="selectAutor" class="form-label">Deseja associar um recurso existente?</label>
+            <select
+              class="form-select"
+              id="selectAutor"
+              aria-label="Default select example"
+              (change)="onChoice()"
+            >
+              <option selected>Não</option>
+              <option>
+                Sim
+              </option>
+            </select>
+          </div>
+          <div class="mb-3" *ngIf="associarRecurso">
+            <label for="selectAutor" class="form-label">Selecione o recurso</label>
+            <select
+              class="form-select"
+              id="selectAutor"
+              aria-label="Default select example"
+            >
+              <option>Selecione</option>
+              <option
+                *ngFor="let recurso of recursos"
+                value="{{ recurso.id }}"
+                (click)="onChange(recurso.id)"
+              >
+                {{ recurso.titulo }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3">
             <label for="tituloInput" class="form-label">Título</label>
             <input type="text" class="form-control" id="tituloInput" formControlName="titulo">
           </div>
