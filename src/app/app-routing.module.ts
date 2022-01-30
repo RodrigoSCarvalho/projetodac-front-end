@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       { path: '', component: RecursoComponent },
       { path: 'add', component: RecursoAddComponent },
-      { path: 'editar/:id', component: RecursoEditComponent },
+      { path: 'editar/:id', component: RecursoAddComponent },
       { path: 'view/:id', component: RecursoViewComponent }, 
     ],
   },

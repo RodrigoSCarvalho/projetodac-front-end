@@ -15,8 +15,13 @@ import { Recurso } from 'src/app/models/Recurso';
 })
 export class RecursoAddComponent implements OnInit {
   autores: Autor[] = [];
+  autoresDisponiveis: Autor[] = [];
   autorId!: number;
   palavrasChave: string[] = [];
+  recursoId: number = 0;
+  isEdit: boolean = false;
+  associarAutor = false;
+
   constructor(
     private _autorService: AutorService,
     private formBuilder: FormBuilder,
@@ -29,8 +34,10 @@ export class RecursoAddComponent implements OnInit {
   @ViewChild('palavras') inputPalavras: any;
 
   ngOnInit(): void {
-    this.retrieveAllAutores();
-    this.palavrasChave;
+    this.recursoId = this.route.snapshot.params['id'];
+
+    this.associarAutor;
+    console.log(this.associarAutor);
 
     this.route.params
       .pipe(
@@ -39,6 +46,18 @@ export class RecursoAddComponent implements OnInit {
       )
       .subscribe((recurso) => this.updateForm(recurso));
 
+
+
+    this.hasId();
+
+    if (this.isEdit) {
+      this.retrieveOutrosAutores();
+    }
+
+    this.retrieveAllAutores();
+
+    this.retrievePalavrasChave();
+
     this.form = this.formBuilder.group({
       id: [null],
       titulo: [null, [Validators.minLength(2), Validators.maxLength(200)]],
@@ -46,12 +65,14 @@ export class RecursoAddComponent implements OnInit {
       palavras_chave: [this.palavrasChave],
       imagem: [null, [Validators.minLength(2)]],
       link: [null, [Validators.minLength(2)]],
-      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
+      data_criacao: [null, 
+        [Validators.minLength(8), Validators.maxLength(12)]],
       data_registro: [
         null,
         [Validators.minLength(8), Validators.maxLength(12)],
       ],
     });
+
   }
 
   updateForm(recurso: Recurso): void {
@@ -68,17 +89,50 @@ export class RecursoAddComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log(this.associarAutor);
     this.submmited = true;
     if (this.form.valid) {
-      console.log(this.palavrasChave);
-      //this.form.controls['palavras_chave'].patchValue(this.palavras)
-      this._recursoService.saveRecurso(this.autorId, this.form.value).subscribe(
-        (success) => {
-          this._location.back();
-        },
-        (error) => console.log(error),
-        () => console.log('request OK')
-      );
+      if (this.associarAutor == false) {
+        if (this.isEdit) {
+          this.form.patchValue({palavras_chave: this.palavrasChave});
+          console.log("submit: " + this.palavrasChave);
+          this._recursoService
+            .updateRecurso(this.recursoId, this.form.value)
+            .subscribe(
+              (success) => {
+                this._location.back();
+              },
+              (error) => console.log(error),
+              () => console.log('request OK')
+            );
+        } else {
+          console.log("submit: " + this.palavrasChave);
+          this._recursoService
+            .saveRecurso(this.autorId, this.form.value)
+            .subscribe(
+              (success) => {
+                this._location.back();
+              },
+              (error) => console.log(error),
+              () => console.log('request OK')
+            );
+        }
+      } else {
+        this.form.patchValue({palavras_chave: this.palavrasChave});
+        this._recursoService
+          .saveRecursoComNovoAutor(
+            this.autorId,
+            this.recursoId,
+            this.form.value
+          )
+          .subscribe(
+            (success) => {
+              this._location.back();
+            },
+            (error) => console.log(error),
+            () => console.log('request OK')
+          );
+      }
     }
   }
   onCancel(): void {
@@ -89,36 +143,16 @@ export class RecursoAddComponent implements OnInit {
   onChange(id: number) {
     this.autorId = id;
   }
-  /*
-  get palavrasChave() : FormArray {
-    return this.form.get("palavras_chave") as FormArray
-  }
 
-  newPalavrasChave(): FormGroup {
-    return this.formBuilder.group({
-      palavras_chave: '',
-    })
- }
- 
- addPalavrasChave() {
-  this.palavrasChave.push(this.newPalavrasChave());
-}
-*/
-  addPalavras(palavra: string) {
-    console.log(palavra);
-    this.palavrasChave.push(palavra);
-    console.log(this.palavrasChave);
-    this.inputPalavras.nativeElement.value = '';
-  }
 
-  removePalavras(): void{
-    if(this.palavrasChave.length > 0){
+  removePalavras(): void {
+    if (this.palavrasChave.length > 0) {
       this.palavrasChave.splice(-1);
     }
   }
 
-  cleanPalavras(): void{
-    if(this.palavrasChave.length > 0){
+  cleanPalavras(): void {
+    if (this.palavrasChave.length > 0) {
       this.palavrasChave = [];
     }
   }
@@ -132,5 +166,49 @@ export class RecursoAddComponent implements OnInit {
         alert('Error: ' + err);
       },
     });
+  }
+
+  retrieveOutrosAutores(): void {
+    this._autorService.retrieveOutrosAutores(this.recursoId).subscribe({
+      next: (autor: any) => {
+        this.autoresDisponiveis = autor;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });
+  }
+
+  retrievePalavrasChave(): void {
+    console.log(this.recursoId);
+    this._recursoService.retrievePalavrasChave(this.recursoId).subscribe({
+      next: (palavraChave: string[]) => {
+        this.palavrasChave = palavraChave;
+        console.log('Palavra Chave Retrieve: ' + this.palavrasChave);
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });
+  }
+
+  hasId(): void {
+    if (this.recursoId == 0 || this.recursoId == null) {
+      this.isEdit = false;
+    } else {
+      this.isEdit = true;
+    }
+  }
+
+  onChoice(): void {
+    this.associarAutor = !this.associarAutor;
+    console.log(this.associarAutor);
+  }
+
+  addPalavras(palavra: string) {
+    console.log(palavra);
+    this.palavrasChave.push(palavra);
+    console.log(this.palavrasChave);
+    this.inputPalavras.nativeElement.value = '';
   }
 }

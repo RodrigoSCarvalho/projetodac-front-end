@@ -32,9 +32,11 @@ export class RecursoEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.recursoId = this.route.snapshot.params['id'];
-
+    this.retrievePalavrasChave();
+    
     this.retrieveAllAutores();
     this.retrieveRecurso();
+    this.retrievePalavrasChave();
 
     this.route.params
       .pipe(
@@ -136,4 +138,17 @@ export class RecursoEditComponent implements OnInit {
       },
     });
   }
+
+  retrievePalavrasChave(): void {
+    this._recursoService.retrievePalavrasChave(this.recursoId).subscribe({
+      next: (palavraChave: any) => {
+        this.palavrasChave = palavraChave;
+        console.log(palavraChave);
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
+    });
+  }
+
 }

@@ -41,4 +41,8 @@ export class EventoService {
   postRecursoEvento(evento: Evento, recursoId: number): Observable<any> {
     return this.httpClient.post<Evento>(`${this.associateEventoRecursoUrl}/${recursoId}/evento`, evento).pipe(take(1));
   }
+
+  retrieveAllRecursosLivres(): Observable<Recurso> {
+    return this.httpClient.get<Recurso>(`${this.eventoUrl}/recursos`);
+  }
 }

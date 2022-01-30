@@ -44,4 +44,8 @@ export class CursoService {
     return this.httpClient.post<Curso>(`${this.associateCursoEventoUrl}/${recursoId}/curso`, curso).pipe(take(1));
   }
 
+  retrieveAllRecursosLivres(): Observable<Recurso> {
+    return this.httpClient.get<Recurso>(`${this.cursoUrl}/recursos`);
+  }
+
 }

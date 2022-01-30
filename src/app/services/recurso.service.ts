@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, take } from 'rxjs';
+import { Autor } from '../models/Autor';
 import { Recurso } from '../models/Recurso';
 
 @Injectable({
@@ -28,12 +29,18 @@ export class RecursoService {
   saveRecurso(id: number, recurso: Recurso): Observable<any>{
     return this.httpClient.post<Recurso>(`${this.addRecursoUrl}/${id}/recurso`, recurso).pipe(take(1));
   }
-
+  saveRecursoComNovoAutor(autorId: number, recursoId: number, recurso: Recurso): Observable<any>{
+    return this.httpClient.put<Recurso>(`${this.addRecursoUrl}/${autorId}/recurso/${recursoId}`, recurso).pipe(take(1));
+  }
   updateRecurso(id: number, recurso: Recurso): Observable<any>{
     return this.httpClient.put<Recurso>(`${this.recursoUrl}/${id}`, recurso).pipe(take(1));
   }
 
   loadById(id: number): Observable<any> {
     return this.httpClient.get<Recurso>(`${this.recursoUrl}/${id}`).pipe(take(1));
+  }
+
+  retrievePalavrasChave(id: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.recursoUrl}/${id}/palavraschave`).pipe(take(1));
   }
 }

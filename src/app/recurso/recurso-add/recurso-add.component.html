@@ -10,7 +10,7 @@
         [formGroup]="form"
         *ngIf="form"
       >
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="!isEdit">
           <label for="selectAutor" class="form-label">Selecione o autor</label>
           <select
             class="form-select"
@@ -27,6 +27,41 @@
             </option>
           </select>
         </div>
+
+        <div class="mb-3" *ngIf="isEdit && autoresDisponiveis.length > 0">
+          <label for="selectAutor" class="form-label">Deseja associar a um novo autor?</label>
+          <select
+            class="form-select"
+            id="selectAutor"
+            aria-label="Default select example"
+            (change)="onChoice()"
+          >
+            <option selected>Não</option>
+            <option>
+              Sim
+            </option>
+          </select>
+        </div>
+
+
+        <div class="mb-3" *ngIf="associarAutor">
+          <label for="selectAutor" class="form-label">Selecione o autor</label>
+          <select
+            class="form-select"
+            id="selectAutor"
+            aria-label="Default select example"
+          >
+            <option>Selecione</option>
+            <option
+              *ngFor="let author of autoresDisponiveis"
+              value="{{ author.id }}"
+              (click)="onChange(author.id)"
+            >
+              {{ author.nome }} {{ author.sobrenome}}
+            </option>
+          </select>
+        </div>
+
 
         <div class="mb-3">
           <label for="tituloInput" class="form-label">Título</label>
@@ -58,7 +93,7 @@
         <div class="mb-3">
           <label for="imagemInput" class="form-label">Imagem</label>
           <input
-            type="email"
+            type="link"
             class="form-control"
             id="imagemInput"
             aria-describedby="imagemHelp"
@@ -97,11 +132,11 @@
           <div class="input-group">
             <input
               #palavras
-              type="email"
+              type="text"
               class="form-control"
               id="palavrasChaveInput"
               aria-describedby="palavrasChaveHelp"
-            />
+              />
             <button
               class="btn btn-outline-success"
               type="button"

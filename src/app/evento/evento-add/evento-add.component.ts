@@ -94,7 +94,7 @@ export class EventoAddComponent implements OnInit {
   }
   
   retrieveAllRecursos(): void {
-    this._recursoService.retrieveAll().subscribe({
+    this._eventoService.retrieveAllRecursosLivres().subscribe({
       next: (recurso: any) => {
         this.recursos = recurso;
       },
