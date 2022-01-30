@@ -19,6 +19,13 @@ import { EventoViewComponent } from './evento/evento-view/evento-view.component'
 import { FormsModule } from '@angular/forms';
 import { RecursoViewComponent } from './recurso/recurso-view/recurso-view.component';
 import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
+import { NgSelect2Module } from 'ng-select2';
+
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 
 @NgModule({
   declarations: [	
@@ -35,7 +42,8 @@ import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.compon
     CursoViewComponent,
     EventoViewComponent,
     RecursoViewComponent,
-    RecursoEditComponent,    
+    RecursoEditComponent,
+        
    ],
   imports: [
     BrowserModule,
@@ -43,7 +51,10 @@ import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.compon
     routing,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxMaskModule.forRoot(maskConfig),
+    NotifierModule,
+    NgSelect2Module
   ],
   providers: [],
   bootstrap: [AppComponent],

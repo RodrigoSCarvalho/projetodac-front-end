@@ -7,16 +7,6 @@
     <div class="col d-flex justify-content-center">
       <form class="needs-validation" novalidate [formGroup]="form">
         <div class="mb-3">
-          <label for="idInput" class="form-label">Id</label>
-          <input
-            type="text"
-            class="form-control"
-            id="idInput"
-            formControlName="id"
-            readonly
-          />
-        </div>
-        <div class="mb-3">
           <label for="tituloInput" class="form-label">Título</label>
           <input
             type="text"
@@ -60,6 +50,7 @@
             id="datacriacaoInput"
             formControlName="data_criacao"
             readonly
+            mask="0000-00-00"
           />
         </div>
         <div class="mb-4">
@@ -70,6 +61,7 @@
             id="dataregistroInput"
             formControlName="data_fim"
             readonly
+            mask="0000-00-00"
           />
         </div>
         <div class="mb-3 text-center">

@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Evento } from 'src/app/models/Evento';
 import { RecursoService } from 'src/app/services/recurso.service';
 import { Recurso } from 'src/app/models/Recurso';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-evento-add',
@@ -19,6 +20,7 @@ export class EventoAddComponent implements OnInit {
   associarRecurso = false;
   recursoId!: number;
   recursos: Recurso[] = [];
+  private readonly notifier: NotifierService;
   
   constructor(
     private formBuilder: FormBuilder,
@@ -26,8 +28,8 @@ export class EventoAddComponent implements OnInit {
     private _location: Location,
     private route: ActivatedRoute,
     private _recursoService: RecursoService,
-
-  ) {}
+    notifierService: NotifierService
+  ) {this.notifier = notifierService;}
 
   ngOnInit(): void {
 
@@ -68,6 +70,7 @@ export class EventoAddComponent implements OnInit {
         this._eventoService.postEvento(this.form.value).subscribe(
           (success) => {
             this._location.back();
+            this.notifier.notify('success', "Evento salvo com sucesso!");
           },
           (error) => console.log(error),
           () => console.log('request OK')
@@ -76,6 +79,7 @@ export class EventoAddComponent implements OnInit {
         this._eventoService.postRecursoEvento(this.form.value, this.recursoId || 0).subscribe(
           (success) => {
             this._location.back();
+            this.notifier.notify('success', "Evento salvo com sucesso!");
           },
           (error) => console.log(error),
           () => console.log('request OK')

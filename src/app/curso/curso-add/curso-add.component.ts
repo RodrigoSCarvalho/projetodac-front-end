@@ -7,6 +7,7 @@ import { Curso } from 'src/app/models/Curso';
 import { map, switchMap } from 'rxjs';
 import { RecursoService } from 'src/app/services/recurso.service';
 import { Recurso } from 'src/app/models/Recurso';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-curso-add',
@@ -19,6 +20,7 @@ export class CursoAddComponent implements OnInit {
   associarRecurso = false;
   recursoId!: number;
   recursos: Recurso[] = [];
+  private readonly notifier: NotifierService;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +28,8 @@ export class CursoAddComponent implements OnInit {
     private _location: Location,
     private route: ActivatedRoute,
     private _recursoService: RecursoService,
-  ) {}
+    notifierService: NotifierService
+  ) {this.notifier = notifierService;}
 
   ngOnInit(): void {
 
@@ -65,6 +68,7 @@ export class CursoAddComponent implements OnInit {
           this._cursoService.postCurso(this.form.value).subscribe(
             (success) => {
               this._location.back();
+              this.notifier.notify('success', "Curso salvo com sucesso!");
             },
             (error) => console.log(error),
             () => console.log('request OK')
@@ -74,6 +78,7 @@ export class CursoAddComponent implements OnInit {
         this._cursoService.postRecursoCurso(this.form.value, this.recursoId).subscribe(
           (success) => {
             this._location.back();
+            this.notifier.notify('success', "Curso salvo com sucesso!");
           },
           (error) => console.log(error),
           () => console.log('request OK')
@@ -93,7 +98,7 @@ export class CursoAddComponent implements OnInit {
   }
   
   retrieveAllRecursos(): void {
-    this._recursoService.retrieveAll().subscribe({
+    this._cursoService.retrieveAllRecursosLivres().subscribe({
       next: (recurso: any) => {
         this.recursos = recurso;
       },

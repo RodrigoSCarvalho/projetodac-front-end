@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
 import { Curso } from '../models/Curso';
 import { CursoService } from '../services/curso.service';
 
@@ -12,9 +13,11 @@ export class CursoComponent implements OnInit {
   constructor(
     private _cursoService: CursoService,
     private _router: Router,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    notifierService: NotifierService
+  ) {this.notifier = notifierService;}
 
+  private readonly notifier: NotifierService;
   deleteId!: number;
   cursoTitulo!: string;
   curso: Curso = new Curso();
@@ -37,6 +40,8 @@ export class CursoComponent implements OnInit {
 
   deleteCursos() {
     this._cursoService.deleteCurso(this.deleteId).subscribe((next) => {
+      let notifica = "Curso: " + this.cursoTitulo + " deletado com sucesso!"
+      this.notifier.notify('error', notifica);
       this.ngOnInit();
       this.closePopup();
     });

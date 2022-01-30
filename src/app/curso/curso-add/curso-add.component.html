@@ -1,66 +1,101 @@
 <div class="container bg-light">
-    <app-navbar></app-navbar>
-    <div class="row">
-        <p class="text-center display-6">Cursos - Formulário</p>
-    </div>
-    <div class="row d-flex">
-      <div class="col d-flex justify-content-center">
-        <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate [formGroup]="form" >
-          <div class="mb-3">
-            <label for="selectAutor" class="form-label">Deseja associar um recurso existente?</label>
-            <select
-              class="form-select"
-              id="selectAutor"
-              aria-label="Default select example"
-              (change)="onChoice()"
-            >
-              <option selected>Não</option>
-              <option>
-                Sim
-              </option>
-            </select>
-          </div>
-          <div class="mb-3" *ngIf="associarRecurso">
-            <label for="selectAutor" class="form-label">Selecione o recurso</label>
-            <select
-              class="form-select"
-              id="selectAutor"
-              aria-label="Default select example"
-            >
-              <option>Selecione</option>
-              <option
-                *ngFor="let recurso of recursos"
-                value="{{ recurso.id }}"
-                (click)="onChange(recurso.id)"
-              >
-                {{ recurso.titulo }}
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="tituloInput" class="form-label">Título</label>
-            <input type="text" class="form-control" id="tituloInput" formControlName="titulo">
-          </div>
-          <div class="mb-3">
-            <label for="descricaoInput" class="form-label">Descrição</label>
-            <input type="text" class="form-control" id="descricaoInput" formControlName="descricao">
-          </div>
-          <div class="mb-3">
-            <label for="imagemInput" class="form-label">Imagem</label>
-            <input type="email" class="form-control" id="imagemInput" aria-describedby="imagemHelp" formControlName="imagem">
-            <div id="imagemHelp" class="form-text">Envie o link de uma imagem hospedada online.</div>
-          </div>
-          <div class="mb-3">
-            <label for="datacriacaoInput" class="form-label">Data de Registro</label>
-            <input type="text" class="form-control" id="datacriacaoInput" formControlName="data_registro">
-          </div>
-          <div class="mb-3 text-center">
-          <button type="submit" class="btn btn-dark align-center">Salvar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  
-  
-  <app-footer></app-footer>
+  <app-navbar></app-navbar>
+  <div class="row">
+    <p class="text-center display-6">Cursos - Formulário</p>
   </div>
+  <div class="row d-flex">
+    <div class="col d-flex justify-content-center">
+      <form
+        (ngSubmit)="onSubmit()"
+        class="needs-validation"
+        novalidate
+        [formGroup]="form"
+      >
+        <div class="mb-3">
+          <label for="selectAutor" class="form-label"
+            >Deseja associar um recurso existente?</label
+          >
+          <select
+            class="form-select"
+            id="selectAutor"
+            aria-label="Default select example"
+            (change)="onChoice()"
+          >
+            <option selected>Não</option>
+            <option>Sim</option>
+          </select>
+        </div>
+        <div class="mb-3" *ngIf="associarRecurso">
+          <label for="selectAutor" class="form-label"
+            >Selecione o recurso</label
+          >
+          <select
+            class="form-select"
+            id="selectAutor"
+            aria-label="Default select example"
+          >
+            <option>Selecione</option>
+            <option
+              *ngFor="let recurso of recursos"
+              value="{{ recurso.id }}"
+              (click)="onChange(recurso.id)"
+            >
+              {{ recurso.titulo }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="tituloInput" class="form-label">Título</label>
+          <input
+            type="text"
+            class="form-control"
+            id="tituloInput"
+            formControlName="titulo"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="descricaoInput" class="form-label">Descrição</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descricaoInput"
+            formControlName="descricao"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="imagemInput" class="form-label">Imagem</label>
+          <input
+            type="email"
+            class="form-control"
+            id="imagemInput"
+            aria-describedby="imagemHelp"
+            formControlName="imagem"
+          />
+          <div id="imagemHelp" class="form-text">
+            Envie o link de uma imagem hospedada online.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="datacriacaoInput" class="form-label"
+            >Data de Registro</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="datacriacaoInput"
+            formControlName="data_registro"
+            matInput
+            mask="0000-00-00"
+          />
+        </div>
+        <div class="mb-3 text-center">
+          <button type="submit" class="btn btn-dark align-center">
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
+</div>

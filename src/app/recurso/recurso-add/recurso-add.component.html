@@ -1,5 +1,6 @@
 <div class="container bg-light">
   <app-navbar></app-navbar>
+  
   <div class="row"></div>
   <div class="row d-flex overflow-auto mb-5">
     <div class="col d-flex justify-content-center">
@@ -112,6 +113,7 @@
             class="form-control"
             id="datacriacaoInput"
             formControlName="data_criacao"
+            matInput mask="0000-00-00"
           />
         </div>
         <div class="mb-4">
@@ -120,9 +122,11 @@
           >
           <input
             type="text"
+            matInput mask="0000-00-00"
             class="form-control"
             id="dataregistroInput"
             formControlName="data_registro"
+            
           />
         </div>
         <div class="mb-3">

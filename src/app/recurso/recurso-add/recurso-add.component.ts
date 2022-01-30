@@ -7,34 +7,78 @@ import { RecursoService } from 'src/app/services/recurso.service';
 import { Location } from '@angular/common';
 import { map, switchMap } from 'rxjs';
 import { Recurso } from 'src/app/models/Recurso';
+import { NotifierService } from 'angular-notifier';
+import { Options } from 'select2';
+import { Select2OptionData } from 'ng-select2';
 
 @Component({
   selector: 'app-recurso-add',
   templateUrl: './recurso-add.component.html',
   styleUrls: ['./recurso-add.component.css'],
+  template: ` <notifier-container></notifier-container> `,
 })
 export class RecursoAddComponent implements OnInit {
   autores: Autor[] = [];
   autoresDisponiveis: Autor[] = [];
   autorId!: number;
   palavrasChave: string[] = [];
+  _value!: string[];
   recursoId: number = 0;
   isEdit: boolean = false;
   associarAutor = false;
+  private readonly notifier: NotifierService;
+  public options!: Options;
+  public exampleData!: Array<Select2OptionData>;
 
+  
   constructor(
     private _autorService: AutorService,
     private formBuilder: FormBuilder,
     private _recursoService: RecursoService,
     private _location: Location,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    notifierService: NotifierService
+  ) {
+    this.notifier = notifierService;
+  }
+
   form!: FormGroup;
   submmited = false;
   @ViewChild('palavras') inputPalavras: any;
 
   ngOnInit(): void {
     this.recursoId = this.route.snapshot.params['id'];
+
+    this.exampleData = [
+      {
+        id: 'multiple1',
+        text: 'Multiple 1'
+      },
+      {
+        id: 'multiple2',
+        text: 'Multiple 2'
+      },
+      {
+        id: 'multiple3',
+        text: 'Multiple 3'
+      },
+      {
+        id: 'multiple4',
+        text: 'Multiple 4'
+      }
+    ];
+
+    this.options = {
+      width: '300',
+      multiple: true,
+      tags: true
+    }
+
+    this._value = ['multiple2', 'multiple4'];
+
+    if (this.recursoId === undefined) {
+      this.recursoId = 0;
+    }
 
     this.associarAutor;
     console.log(this.associarAutor);
@@ -46,13 +90,9 @@ export class RecursoAddComponent implements OnInit {
       )
       .subscribe((recurso) => this.updateForm(recurso));
 
-
-
     this.hasId();
 
-    if (this.isEdit) {
-      this.retrieveOutrosAutores();
-    }
+    this.retrieveOutrosAutores();
 
     this.retrieveAllAutores();
 
@@ -65,14 +105,12 @@ export class RecursoAddComponent implements OnInit {
       palavras_chave: [this.palavrasChave],
       imagem: [null, [Validators.minLength(2)]],
       link: [null, [Validators.minLength(2)]],
-      data_criacao: [null, 
-        [Validators.minLength(8), Validators.maxLength(12)]],
+      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
       data_registro: [
         null,
         [Validators.minLength(8), Validators.maxLength(12)],
       ],
     });
-
   }
 
   updateForm(recurso: Recurso): void {
@@ -94,31 +132,33 @@ export class RecursoAddComponent implements OnInit {
     if (this.form.valid) {
       if (this.associarAutor == false) {
         if (this.isEdit) {
-          this.form.patchValue({palavras_chave: this.palavrasChave});
-          console.log("submit: " + this.palavrasChave);
+          this.form.patchValue({ palavras_chave: this.palavrasChave });
+          console.log('submit: ' + this.palavrasChave);
           this._recursoService
             .updateRecurso(this.recursoId, this.form.value)
             .subscribe(
               (success) => {
                 this._location.back();
+                this.notifier.notify('success', "Recurso alterado com sucesso!");
               },
               (error) => console.log(error),
               () => console.log('request OK')
             );
         } else {
-          console.log("submit: " + this.palavrasChave);
+          console.log('submit: ' + this.palavrasChave);
           this._recursoService
             .saveRecurso(this.autorId, this.form.value)
             .subscribe(
               (success) => {
                 this._location.back();
+                this.notifier.notify('success', "Recurso cadastrado com sucesso!");
               },
               (error) => console.log(error),
               () => console.log('request OK')
             );
         }
       } else {
-        this.form.patchValue({palavras_chave: this.palavrasChave});
+        this.form.patchValue({ palavras_chave: this.palavrasChave });
         this._recursoService
           .saveRecursoComNovoAutor(
             this.autorId,
@@ -128,6 +168,7 @@ export class RecursoAddComponent implements OnInit {
           .subscribe(
             (success) => {
               this._location.back();
+              this.notifier.notify('success', "Recurso alterado com sucesso!");
             },
             (error) => console.log(error),
             () => console.log('request OK')
@@ -144,16 +185,17 @@ export class RecursoAddComponent implements OnInit {
     this.autorId = id;
   }
 
-
   removePalavras(): void {
     if (this.palavrasChave.length > 0) {
       this.palavrasChave.splice(-1);
+      this.notifier.notify('default', "Última palavra-chave removida com sucesso!");
     }
   }
 
   cleanPalavras(): void {
     if (this.palavrasChave.length > 0) {
       this.palavrasChave = [];
+      this.notifier.notify('error', "Palavras-chave limpas com sucesso!");
     }
   }
 
@@ -193,7 +235,11 @@ export class RecursoAddComponent implements OnInit {
   }
 
   hasId(): void {
-    if (this.recursoId == 0 || this.recursoId == null) {
+    if (
+      this.recursoId == 0 ||
+      this.recursoId == null ||
+      this.recursoId === undefined
+    ) {
       this.isEdit = false;
     } else {
       this.isEdit = true;
@@ -210,5 +256,17 @@ export class RecursoAddComponent implements OnInit {
     this.palavrasChave.push(palavra);
     console.log(this.palavrasChave);
     this.inputPalavras.nativeElement.value = '';
+    let notifica = "Palavra: " +palavra+ " adicionada com sucesso!" 
+    this.notifier.notify('success', notifica);
   }
+
+  get value(): string[] {
+    return this._value;
+  }
+  set value(value: string[]) {
+    console.log('Set value: ' + value);
+    this._value = value;
+  }
+
+
 }
