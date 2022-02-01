@@ -1,0 +1,72 @@
+<router-outlet></router-outlet>
+<div class="container bg-light">
+  <app-navbar></app-navbar>
+  <div class="row">
+    <p class="text-center display-5">Autores</p>
+  </div>
+  <div class="row">
+    <div class="col">
+      <table class="table table-dark table-curved table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Orcid</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Sobrenome</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Afiliação</th>
+            <th scope="col">View</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let author of autores">
+          <tr class="info-user">
+            <td>{{author.orcid}}</td>
+            <td>{{author.nome}}</td>
+            <td>{{author.sobrenome}}</td>
+            <td>{{author.email}}</td>
+            <td>{{author.afiliacao}}</td>
+            <td><button (click)="onView(author.id)" style="background: transparent; border: none;"><img src="../../assets/view.svg" alt="View"></button></td>
+            <td><button class="btn-excluir" name={{author.nome}} value={{author.id}}
+                (click)="openPopup(author.id, author.nome)" style="background: transparent; border: none;"><img
+                  src="../../assets/delete.svg" alt="Delete" data-bs-toggle="modal"
+                  data-bs-target="#modalExcluir" /></button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+  <div class="row ">
+    <div class="col d-flex justify-content-center">
+      <a type="button" class="btn btn-outline-secondary" routerLink="add">Cadastrar Autor</a>
+    </div>
+  </div>
+
+
+  <app-footer></app-footer>
+
+
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Atenção!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closePopup()"
+            style="border: none; background: transparent;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente excluir o autor: {{autorNome}}?</p>
+        </div>
+        <div class="modal-footer text-center">
+          <button type="button" class="btn btn-secondary text-center" data-dismiss="modal"
+            (click)="closePopup()">Cancelar</button>
+          <button type="button" class="btn btn-danger" (click)="deleteAutor()">Excluir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

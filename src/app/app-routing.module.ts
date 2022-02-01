@@ -1,6 +1,7 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AutorComponent } from './autor/autor.component';
 import { CursoAddComponent } from './curso/curso-add/curso-add.component';
 import { CursoViewComponent } from './curso/curso-view/curso-view.component';
 import { CursoComponent } from './curso/curso.component';
@@ -37,6 +38,15 @@ const routes: Routes = [
     path: 'cursos',
     children: [
       { path: '', component: CursoComponent },
+      { path: 'add', component: CursoAddComponent },
+      { path: 'editar/:id', component: CursoAddComponent },
+      { path: 'view/:id', component: CursoViewComponent }, 
+    ],
+  },
+  {
+    path: 'autores',
+    children: [
+      { path: '', component: AutorComponent },
       { path: 'add', component: CursoAddComponent },
       { path: 'editar/:id', component: CursoAddComponent },
       { path: 'view/:id', component: CursoViewComponent }, 

@@ -22,6 +22,7 @@ import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.compon
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { NgSelect2Module } from 'ng-select2';
+import { AutorComponent } from './autor/autor.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -43,6 +44,7 @@ const maskConfig: Partial<IConfig> = {
     EventoViewComponent,
     RecursoViewComponent,
     RecursoEditComponent,
+    AutorComponent,
         
    ],
   imports: [
