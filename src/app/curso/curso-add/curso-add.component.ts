@@ -112,4 +112,8 @@ export class CursoAddComponent implements OnInit {
     this.recursoId = id;
   }
 
+  
+  getBack(): void {
+    this._location.back();
+  }
 }

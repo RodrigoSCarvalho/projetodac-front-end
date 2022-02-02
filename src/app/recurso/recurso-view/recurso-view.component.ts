@@ -64,4 +64,6 @@ export class RecursoViewComponent implements OnInit {
       relativeTo: this.route.parent,
     });
   }
+
+
 }

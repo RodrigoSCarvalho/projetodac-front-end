@@ -23,6 +23,52 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import { NgSelect2Module } from 'ng-select2';
 import { AutorComponent } from './autor/autor.component';
+import { AutorViewComponent } from './autor/autor-view/autor-view.component';
+import { AutorAddComponent } from './autor/autor-add/autor-add.component';
+
+/**
+ * Custom angular notifier options
+ */
+ const customNotifierOptions: NotifierOptions = {
+  position: {
+		horizontal: {
+			position: 'right',
+			distance: 12
+		},
+		vertical: {
+			position: 'top',
+			distance: 60,
+			gap: 10
+		}
+	},
+  theme: 'material',
+  behaviour: {
+    autoHide: 5000,
+    onClick: 'hide',
+    onMouseover: 'pauseAutoHide',
+    showDismissButton: true,
+    stacking: 8
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: 'slide',
+      speed: 300,
+      easing: 'ease'
+    },
+    hide: {
+      preset: 'fade',
+      speed: 300,
+      easing: 'ease',
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: 'ease'
+    },
+    overlap: 150
+  }
+};
 
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -45,7 +91,8 @@ const maskConfig: Partial<IConfig> = {
     RecursoViewComponent,
     RecursoEditComponent,
     AutorComponent,
-        
+    AutorViewComponent,
+    AutorAddComponent,
    ],
   imports: [
     BrowserModule,
@@ -55,7 +102,7 @@ const maskConfig: Partial<IConfig> = {
     ReactiveFormsModule,
     FormsModule,
     NgxMaskModule.forRoot(maskConfig),
-    NotifierModule,
+    NotifierModule.withConfig(customNotifierOptions),
     NgSelect2Module
   ],
   providers: [],

@@ -1,6 +1,8 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AutorAddComponent } from './autor/autor-add/autor-add.component';
+import { AutorViewComponent } from './autor/autor-view/autor-view.component';
 import { AutorComponent } from './autor/autor.component';
 import { CursoAddComponent } from './curso/curso-add/curso-add.component';
 import { CursoViewComponent } from './curso/curso-view/curso-view.component';
@@ -10,7 +12,6 @@ import { EventoViewComponent } from './evento/evento-view/evento-view.component'
 import { EventoComponent } from './evento/evento.component';
 import { HomeComponent } from './home/home.component';
 import { RecursoAddComponent } from './recurso/recurso-add/recurso-add.component';
-import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.component';
 import { RecursoViewComponent } from './recurso/recurso-view/recurso-view.component';
 import { RecursoComponent } from './recurso/recurso.component';
 
@@ -48,8 +49,8 @@ const routes: Routes = [
     children: [
       { path: '', component: AutorComponent },
       { path: 'add', component: CursoAddComponent },
-      { path: 'editar/:id', component: CursoAddComponent },
-      { path: 'view/:id', component: CursoViewComponent }, 
+      { path: 'editar/:id', component: AutorAddComponent },
+      { path: 'view/:id', component: AutorViewComponent }, 
     ],
   },
 ];

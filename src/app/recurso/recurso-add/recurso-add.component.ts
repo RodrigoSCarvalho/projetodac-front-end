@@ -268,5 +268,8 @@ export class RecursoAddComponent implements OnInit {
     this._value = value;
   }
 
+  getBack(): void {
+    this._location.back();
+  }
 
 }

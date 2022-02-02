@@ -19,6 +19,7 @@ export class AutorComponent implements OnInit {
   ) {this.notifier = notifierService;}
 
   autorNome: string | undefined;
+  autorSobrenome: string | undefined;
   deleteId!: number;
   autor: Autor = new Autor();
   autores: Autor[] = [];
@@ -42,7 +43,7 @@ export class AutorComponent implements OnInit {
 
   deleteAutor() {
     this._autorService.deleteAutor(this.deleteId).subscribe((next) => {
-      let notifica = "Autor: "+this.autorNome+ " deletado com sucesso!";
+      let notifica = "Autor: "+this.autorNome+" "+this.autorSobrenome+ " deletado com sucesso!";
       this.notifier.notify('error', notifica);
       this.ngOnInit();
       this.closePopup();
@@ -51,9 +52,10 @@ export class AutorComponent implements OnInit {
 
   displayStyle = 'none';
 
-  openPopup(id: number, autor: string | undefined): void {
+  openPopup(id: number, nome: string | undefined, sobrenome: string | undefined): void {
     this.deleteId = id;
-    this.autorNome = autor;
+    this.autorNome = nome;
+    this.autorSobrenome = sobrenome;
     this.displayStyle = 'block';
   }
 

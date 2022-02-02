@@ -111,4 +111,9 @@ export class EventoAddComponent implements OnInit {
   onChange(id: number) {
     this.recursoId = id;
   }
+
+  
+  getBack(): void {
+    this._location.back();
+  }
 }

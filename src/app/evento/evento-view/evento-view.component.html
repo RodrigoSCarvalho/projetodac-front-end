@@ -76,6 +76,63 @@
       </form>
     </div>
   </div>
+  <div class="row d-flex justify-content-center" *ngIf="res.length > 0">
+    <div class="col d-flex justify-content-center">
+      <div class="mb-3">
+        <label for="selectAutor" class="form-label"
+          >Deseja associar um recurso existente?</label
+        >
+        <select
+          class="form-select"
+          id="selectAutor"
+          aria-label="Default select example"
+          (change)="onChoice()"
+        >
+          <option selected>Não</option>
+          <option>Sim</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center" *ngIf="res.length > 0">
+    <div class="col d-flex justify-content-center">
+      <div class="mb-6 justify-content-center">
+        <form
+          (ngSubmit)="onSubmit()"
+          class="needs-validation"
+          novalidate
+          [formGroup]="form"
+          *ngIf="associarRecurso"
+          class="justify-content-center"
+        >
+          <div class="mb-3">
+            <label for="selectAutor" class="form-label"
+              >Selecione o recurso</label
+            >
+            <select
+              class="form-select"
+              id="selectAutor"
+              aria-label="Default select example"
+            >
+              <option>Selecione</option>
+              <option
+                *ngFor="let rec of res"
+                value="{{ rec.id }}"
+                (click)="onChange(rec.id)"
+              >
+                {{ rec.titulo }}
+              </option>
+            </select>
+          </div>
+          <div class="mb-3 text-center">
+            <button type="submit" class="btn btn-dark align-center mx-2">
+              Salvar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <div class="row" *ngIf="recursos.length>0">
     <p class="text-center fs-5"> Recursos do Evento </p>
   </div>
@@ -91,6 +148,7 @@
             <th scope="col">Data de Criação</th>
             <th scope="col">Data de Registro</th>
             <th scope="col">Palavras Chave</th>
+            <th scope="col">Desassociar</th>
           </tr>
         </thead>
         <tbody *ngFor="let resourse of recursos">
@@ -102,11 +160,19 @@
             <td>{{resourse.data_criacao}}</td>
             <td>{{resourse.data_registro}}</td>
             <td>{{resourse.palavras_chave}}</td>
+            <td>
+              <button
+                (click)="onRemove(resourse.id)"
+                style="background: transparent; border: none"
+              >
+                <img src="../../assets/remove.svg" alt="View" />
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-
+    
   <app-footer></app-footer>
 </div>
 

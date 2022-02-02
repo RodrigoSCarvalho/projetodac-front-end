@@ -27,7 +27,7 @@
             <td>{{author.afiliacao}}</td>
             <td><button (click)="onView(author.id)" style="background: transparent; border: none;"><img src="../../assets/view.svg" alt="View"></button></td>
             <td><button class="btn-excluir" name={{author.nome}} value={{author.id}}
-                (click)="openPopup(author.id, author.nome)" style="background: transparent; border: none;"><img
+                (click)="openPopup(author.id, author.nome, author.sobrenome)" style="background: transparent; border: none;"><img
                   src="../../assets/delete.svg" alt="Delete" data-bs-toggle="modal"
                   data-bs-target="#modalExcluir" /></button></td>
           </tr>
@@ -58,7 +58,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Deseja realmente excluir o autor: {{autorNome}}?</p>
+          <p>Deseja realmente excluir o autor: {{autorNome}} {{autorSobrenome}}?</p>
         </div>
         <div class="modal-footer text-center">
           <button type="button" class="btn btn-secondary text-center" data-dismiss="modal"

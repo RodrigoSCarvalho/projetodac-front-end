@@ -6,6 +6,8 @@ import { Evento } from 'src/app/models/Evento';
 import { EventoService } from 'src/app/services/evento.service';
 import { Location } from '@angular/common';
 import { Recurso } from 'src/app/models/Recurso';
+import { RecursoService } from 'src/app/services/recurso.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-evento-view',
@@ -18,17 +20,27 @@ export class EventoViewComponent implements OnInit {
   editId!: number;
   eventos: Evento[] = [];
   recursos: Recurso[] = [];
+  res: Recurso[] = [];
+  eventoId!: number;
+  private readonly notifier: NotifierService
+  associarRecurso = false;
+  recursoId!: number;
 
   constructor(
     private formBuilder: FormBuilder,
     private _eventoService: EventoService,
     private _location: Location,
     private route: ActivatedRoute,
-    private _router: Router
-  ) {}
+    private _router: Router,
+    private _recursoService: RecursoService,
+    notifierService: NotifierService
+  ) {this.notifier = notifierService}
 
   ngOnInit(): void {
     
+    this.eventoId = this.route.snapshot.params['id'];   
+
+    this.retrieveAllRecursosLivres();
     
     this.route.params
       .pipe(
@@ -76,6 +88,52 @@ export class EventoViewComponent implements OnInit {
   onEdit(): void {
     this._router.navigate(['editar', this.editId], {
       relativeTo: this.route.parent,
+    });
+  }
+
+  onRemove(recurso: number) {
+    this._recursoService.desassociarRecursoColecao(recurso, this.eventoId).subscribe(
+      (success) => {
+        this.notifier.notify('success', "Recurso desassociado com sucesso!");
+        window.location.reload();
+      },(error) => console.log(error),
+      () => console.log('request OK')
+    );}
+
+    
+  onChoice(): void {
+    this.associarRecurso = !this.associarRecurso;
+    console.log(this.associarRecurso);
+  }
+  onChange(id: number) {
+    this.recursoId = id;
+  }
+
+  onSubmit(): void {
+    this.submmited = true;
+    if (this.form.valid) {
+        if(this.associarRecurso == true){
+        this._eventoService.postRecursoEvento(this.form.value, this.recursoId).subscribe(
+          (success) => {
+            this.associarRecurso=false;
+            this.form.reset();
+            this.notifier.notify('success', "Recurso associado com sucesso!");
+          },
+          (error) => console.log(error),
+          () => console.log('request OK')
+        );
+
+      }
+    }
+  }
+  retrieveAllRecursosLivres(): void {
+    this._eventoService.retrieveAllRecursosLivres().subscribe({
+      next: (r: any) => {
+        this.res = r;
+      },
+      error: (err) => {
+        alert('Error: ' + err);
+      },
     });
   }
 }

@@ -13,6 +13,7 @@ export class RecursoService {
   private recursoRecentUrl='http://localhost:8080/recurso/recentes'
   private recursoUrl='http://localhost:8080/recurso'
   private addRecursoUrl='http://localhost:8080/author'
+  private colecaoUrl='http://localhost:8080/colecao'
 
   retrieveRecents(): Observable<Recurso>{
     return this.httpClient.get<Recurso>(this.recursoRecentUrl);
@@ -42,5 +43,9 @@ export class RecursoService {
 
   retrievePalavrasChave(id: number): Observable<any> {
     return this.httpClient.get<any>(`${this.recursoUrl}/${id}/palavraschave`).pipe(take(1));
+  }
+
+  desassociarRecursoColecao(recursoId: number, colecaoId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.colecaoUrl}/${colecaoId}/recurso/${recursoId}`).pipe(take(1));
   }
 }

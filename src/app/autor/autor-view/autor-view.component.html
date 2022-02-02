@@ -1,0 +1,108 @@
+<div class="container bg-light">
+    <app-navbar></app-navbar>
+    <div class="row">
+      <p class="text-center display-6">Autor - Detalhes</p>
+    </div>
+    <div class="row d-flex">
+      <div class="col d-flex justify-content-center">
+        <form [formGroup]="form">
+          <div class="mb-3">
+            <label for="orcidInput" class="form-label">Orcid</label>
+            <input
+              type="text"
+              class="form-control"
+              id="orcidInput"
+              formControlName="orcid"
+              readonly
+              mask="0000-0000-0000-0000"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="nomeInput" class="form-label">Nome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nomeInput"
+              formControlName="nome"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="sobrenomeInput" class="form-label">Sobrenome</label>
+            <input
+              type="text"
+              class="form-control"
+              id="sobrenomeInput"
+              formControlName="sobrenome"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="emailInput" class="form-label">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="emailInput"
+              aria-describedby="imagemHelp"
+              formControlName="email"
+              readonly
+            />
+          </div>
+          <div class="mb-3">
+            <label for="afiliacaoInput" class="form-label"
+              >Afiliação</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="afiliacaoInput"
+              formControlName="afiliacao"
+              readonly
+            />
+          </div>
+          <div class="mb-3 text-center">
+            <button
+              type="button"
+              class="btn btn-warning align-center"
+              (click)="onEdit()"
+            >
+              Editar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row" *ngIf="recursos.length>0">
+      <p class="text-center fs-5"> Recursos do Curso </p>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table table-curved table-striped table-borderless table-hover" *ngIf="recursos.length>0">
+          <thead>
+            <tr>
+              <th scope="col">Imagem</th>
+              <th scope="col">Título</th>
+              <th scope="col">Descricao</th>
+              <th scope="col">Palavras Chave</th>
+              <th scope="col">Link</th>
+              <th scope="col">Data de Criação</th>
+              <th scope="col">Data de Registro</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let resourse of recursos">
+            <tr class="info-user">
+              <td><img src={{resourse.imagem}} width="40" height="40" alt= /></td>
+              <td>{{resourse.titulo}}</td>
+              <td>{{resourse.descricao}}</td>
+              <td>{{resourse.palavras_chave}}</td>
+              <td><a href={{resourse.link}} target="_blank">{{resourse.link}}</a></td>
+              <td>{{resourse.data_criacao}}</td>
+              <td>{{resourse.data_registro}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+    <app-footer></app-footer>
+  </div>
+  
