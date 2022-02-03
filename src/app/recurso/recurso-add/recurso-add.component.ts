@@ -146,7 +146,8 @@ export class RecursoAddComponent implements OnInit {
             );
         } else {
           console.log('submit: ' + this.palavrasChave);
-          this._recursoService
+          this.form.patchValue({ palavras_chave: this.palavrasChave });
+          this._recursoService          
             .saveRecurso(this.autorId, this.form.value)
             .subscribe(
               (success) => {

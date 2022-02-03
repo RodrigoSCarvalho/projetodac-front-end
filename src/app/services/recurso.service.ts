@@ -13,7 +13,8 @@ export class RecursoService {
   private recursoRecentUrl='http://localhost:8080/recurso/recentes'
   private recursoUrl='http://localhost:8080/recurso'
   private addRecursoUrl='http://localhost:8080/author'
-  private colecaoUrl='http://localhost:8080/colecao'
+  private desassociarUrl='http://localhost:8080/desassociar'
+  private associarUrl='http://localhost:8080/associar'
 
   retrieveRecents(): Observable<Recurso>{
     return this.httpClient.get<Recurso>(this.recursoRecentUrl);
@@ -45,7 +46,19 @@ export class RecursoService {
     return this.httpClient.get<any>(`${this.recursoUrl}/${id}/palavraschave`).pipe(take(1));
   }
 
+  retrieveIdDeCursosLivres(): Observable<any> {
+    return this.httpClient.get<any>(`${this.recursoUrl}/cursos`).pipe(take(1));
+  }
+
+  retrieveIdDeEventosLivres(): Observable<any> {
+    return this.httpClient.get<any>(`${this.recursoUrl}/eventos`).pipe(take(1));
+  }
+
   desassociarRecursoColecao(recursoId: number, colecaoId: number): Observable<any> {
-    return this.httpClient.get<any>(`${this.colecaoUrl}/${colecaoId}/recurso/${recursoId}`).pipe(take(1));
+    return this.httpClient.get<any>(`${this.desassociarUrl}/${colecaoId}/recurso/${recursoId}`).pipe(take(1));
+  }
+
+  associarRecursoColecao(recursoId: number, colecaoId: number): Observable<any> {
+    return this.httpClient.get<any>(`${this.associarUrl}/${colecaoId}/recurso/${recursoId}`).pipe(take(1));
   }
 }

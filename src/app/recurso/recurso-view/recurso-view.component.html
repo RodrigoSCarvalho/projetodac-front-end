@@ -1,110 +1,186 @@
 <div class="container bg-light">
-    <app-navbar></app-navbar>
-    <div class="row"></div>
-    <div class="row d-flex">
-      <div class="col d-flex justify-content-center">
+  <app-navbar></app-navbar>
+  <div class="row"></div>
+  <div class="row d-flex">
+    <div class="col d-flex justify-content-center">
+      <form class="needs-validation" novalidate [formGroup]="form">
+        <div class="mb-3">
+          <label for="tituloInput" class="form-label">Título</label>
+          <input
+            type="text"
+            class="form-control"
+            id="tituloInput"
+            formControlName="titulo"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="descricaoInput" class="form-label">Descrição</label>
+          <input
+            type="text"
+            class="form-control"
+            id="descricaoInput"
+            formControlName="descricao"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="linkInput" class="form-label">Link</label>
+          <input
+            type="text"
+            class="form-control"
+            id="linkInput"
+            formControlName="link"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="imagemInput" class="form-label">Imagem</label>
+          <input
+            type="email"
+            class="form-control"
+            id="imagemInput"
+            aria-describedby="imagemHelp"
+            formControlName="imagem"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="datacriacaoInput" class="form-label"
+            >Data de Criação</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="datacriacaoInput"
+            formControlName="data_criacao"
+            mask="0000-00-00"
+            readonly
+          />
+        </div>
+        <div class="mb-4">
+          <label for="dataregistroInput" class="form-label"
+            >Data de Registro</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="dataregistroInput"
+            formControlName="data_registro"
+            readonly
+            mask="0000-00-00"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="palavrasChaveInput" class="form-label"
+            >Palavras-Chave</label
+          >
+          <div class="input-group">
+            <input
+              #palavras
+              type="email"
+              class="form-control"
+              id="palavrasChaveInput"
+              aria-describedby="palavrasChaveHelp"
+              formControlName="palavras_chave"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="mb-3 text-center">
+          <button
+            type="button"
+            class="btn btn-warning align-center mx-2"
+            (click)="onEdit()"
+          >
+            Editar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div
+    class="row d-flex justify-content-center"
+    *ngIf="cursos.length > 0 || eventos.length > 0"
+  >
+    <div class="col d-flex justify-content-center">
+      <div class="mb-3">
+        <label for="selectAutor" class="form-label"
+          >Deseja associar a uma coleção existente?</label
+        >
+        <select
+          
+          [(ngModel)]="colecao"
+          class="form-select"
+          id="selectColecao"
+          aria-label="Default select example"
+        >
+          <option value="" disabled>Não</option>
+          <option *ngFor="let colection of colecoes" [ngValue]="colection.id">
+            {{ colection.name }}
+          </option>
+        </select>
+        <span class="mt-2" *ngIf=" colecao == 1"><p  class="mt-2 fw-light fs-6 text text-danger" *ngIf=" cursos.length == 0 ">*Sem disponibilidade para a coleção selecionada.</p></span>
+        <span class="mt-2" *ngIf=" colecao == 2"><p  class="mt-2 fw-light fs-6 text text-danger" *ngIf=" eventos.length == 0 ">*Sem disponibilidade para a coleção selecionada.</p></span>
+      </div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center mb-5">
+    <div class="col d-flex justify-content-center">
+      <div class="mb-6 justify-content-center">
         <form
+          (ngSubmit)="onSubmit()"
           class="needs-validation"
           novalidate
           [formGroup]="form"
+          class="justify-content-center"
         >
-  
-          <div class="mb-3">
-            <label for="tituloInput" class="form-label">Título</label>
-            <input
-              type="text"
-              class="form-control"
-              id="tituloInput"
-              formControlName="titulo"
-              readonly
-            />
-          </div>
-          <div class="mb-3">
-            <label for="descricaoInput" class="form-label">Descrição</label>
-            <input
-              type="text"
-              class="form-control"
-              id="descricaoInput"
-              formControlName="descricao"
-              readonly
-            />
-          </div>
-          <div class="mb-3">
-            <label for="linkInput" class="form-label">Link</label>
-            <input
-              type="text"
-              class="form-control"
-              id="linkInput"
-              formControlName="link"
-              readonly
-            />
-          </div>
-          <div class="mb-3">
-            <label for="imagemInput" class="form-label">Imagem</label>
-            <input
-              type="email"
-              class="form-control"
-              id="imagemInput"
-              aria-describedby="imagemHelp"
-              formControlName="imagem"
-              readonly
-            />
-          </div>
-          <div class="mb-3">
-            <label for="datacriacaoInput" class="form-label"
-              >Data de Criação</label
+          <div class="mb-3" *ngIf="colecao == 1 && cursos.length > 0">
+            <label for="selectAutor" class="form-label"
+              >Selecione o Curso</label
             >
-            <input
-              type="text"
-              class="form-control"
-              id="datacriacaoInput"
-              formControlName="data_criacao"
-              mask="0000-00-00"
-              readonly
-            />
-          </div>
-          <div class="mb-4">
-            <label for="dataregistroInput" class="form-label"
-              >Data de Registro</label
+            <select
+              class="form-select"
+              id="selectAutor"
+              aria-label="Default select example"
             >
-            <input
-              type="text"
-              class="form-control"
-              id="dataregistroInput"
-              formControlName="data_registro"
-              readonly
-              mask="0000-00-00"
-            />
+              <option select>Selecione</option>
+              <option
+                *ngFor="let curso of cursos"
+                value="{{ curso.id }}"
+                (click)="onChange(curso.id)"
+              >
+                {{ curso.titulo }}
+              </option>
+            </select>
           </div>
-          <div class="mb-3">
-            <label for="palavrasChaveInput" class="form-label"
-              >Palavras-Chave</label
+          <div class="mb-3" *ngIf="colecao == 2 && eventos.length > 0">
+            <label for="selectAutor" class="form-label"
+              >Selecione o Evento</label
             >
-            <div class="input-group">
-              <input
-                #palavras
-                type="email"
-                class="form-control"
-                id="palavrasChaveInput"
-                aria-describedby="palavrasChaveHelp"
-                formControlName="palavras_chave"
-                readonly
-              />
-            </div>
+            <select
+              class="form-select"
+              id="selectAutor"
+              aria-label="Default select example"
+            >
+              <option select>Selecione</option>
+              <option
+                *ngFor="let evento of eventos"
+                value="{{ evento.id }}"
+                (click)="onChange(evento.id)"
+              >
+                {{ evento.titulo }}
+              </option>
+            </select>
           </div>
           <div class="mb-3 text-center">
-            <button
-              type="button"
-              class="btn btn-warning align-center mx-2"
-              (click)="onEdit()"
-            >
-              Editar
+            <button type="submit" class="btn btn-dark align-center">
+              Salvar
             </button>
           </div>
         </form>
       </div>
     </div>
-  
-    <app-footer></app-footer>
   </div>
-  
+  <app-footer></app-footer>
+</div>

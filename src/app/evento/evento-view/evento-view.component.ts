@@ -117,6 +117,7 @@ export class EventoViewComponent implements OnInit {
           (success) => {
             this.associarRecurso=false;
             this.form.reset();
+            window.location.reload();
             this.notifier.notify('success', "Recurso associado com sucesso!");
           },
           (error) => console.log(error),

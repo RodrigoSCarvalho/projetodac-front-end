@@ -48,7 +48,7 @@ const routes: Routes = [
     path: 'autores',
     children: [
       { path: '', component: AutorComponent },
-      { path: 'add', component: CursoAddComponent },
+      { path: 'add', component: AutorAddComponent },
       { path: 'editar/:id', component: AutorAddComponent },
       { path: 'view/:id', component: AutorViewComponent }, 
     ],
