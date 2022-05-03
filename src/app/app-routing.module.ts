@@ -1,3 +1,4 @@
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -14,6 +15,8 @@ import { HomeComponent } from './home/home.component';
 import { RecursoAddComponent } from './recurso/recurso-add/recurso-add.component';
 import { RecursoViewComponent } from './recurso/recurso-view/recurso-view.component';
 import { RecursoComponent } from './recurso/recurso.component';
+
+
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

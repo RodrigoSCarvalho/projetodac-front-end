@@ -23,10 +23,10 @@
             <td>{{course.titulo}}</td>
             <td>{{course.descricao}}</td>
             <td>{{course.data_registro}}</td>
-            <td><button  (click)="onView(course.id)" style="background: transparent; border: none;"><img src="../../assets/view.svg" alt="View"></button></td>
+            <td><button  (click)="onView(course.id)" style="background: transparent; border: none;"><img src="./assets/view.svg" alt="View"></button></td>
             <td><button class="btn-excluir" name={{course.titulo}} value={{course.id}}
                 (click)="openPopup(course.id, course.titulo)" style="background: transparent; border: none;"><img
-                  src="../../assets/delete.svg" alt="Delete" data-bs-toggle="modal"
+                  src="./assets/delete.svg" alt="Delete" data-bs-toggle="modal"
                   data-bs-target="#modalExcluir" /></button></td>
           </tr>
         </tbody>

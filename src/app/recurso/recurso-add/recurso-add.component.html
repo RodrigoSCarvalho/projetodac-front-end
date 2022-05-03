@@ -6,7 +6,7 @@
     <div class="col d-flex justify-content-center">
       <form
         (ngSubmit)="onSubmit()"
-        class="needs-validation"
+        class="needs-validation pb-5"
         novalidate
         [formGroup]="form"
         *ngIf="form"
@@ -75,12 +75,12 @@
         </div>
         <div class="mb-3">
           <label for="descricaoInput" class="form-label">Descrição</label>
-          <input
+          <textarea
             type="text"
             class="form-control"
             id="descricaoInput"
             formControlName="descricao"
-          />
+          ></textarea>
         </div>
         <div class="mb-3">
           <label for="linkInput" class="form-label">Link</label>
@@ -191,6 +191,7 @@
       </form>
     </div>
   </div>
+  <div class="row"></div>
 
 
 </div>

@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy:ghdocs": "ng build --prod --output-path docs --base-href /projetodac-front-end/np"
+    "deploy:ghdocs": "ng build --prod --output-path docs --base-href /projetodac-front-end/"
   },
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "popper.js": "^1.16.1",
     "rxjs": "~7.4.0",
     "select2": "^4.1.0-rc.0",
+    "node-forge": ">=1.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -38,6 +39,7 @@
     "@angular/compiler-cli": "~13.1.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
+    "angular-cli-ghpages": "^1.0.0",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -45,6 +47,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "tslib": "^2.4.0",
-    "typescript": "~4.5.2"
+    "typescript": "~4.5.2",
+    "node-forge": ">=1.3.0"
   }
 }
