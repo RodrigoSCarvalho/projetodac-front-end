@@ -10,11 +10,11 @@ import { Recurso } from '../models/Recurso';
 export class RecursoService {
 
   constructor(private httpClient: HttpClient) {}
-  private recursoRecentUrl='http://localhost:8080/recurso/recentes'
-  private recursoUrl='http://localhost:8080/recurso'
-  private addRecursoUrl='http://localhost:8080/author'
-  private desassociarUrl='http://localhost:8080/desassociar'
-  private associarUrl='http://localhost:8080/associar'
+  private recursoRecentUrl='https://rest-api-recursos-educacionais.herokuapp.com/recurso/recentes'
+  private recursoUrl='https://rest-api-recursos-educacionais.herokuapp.com/recurso'
+  private addRecursoUrl='https://rest-api-recursos-educacionais.herokuapp.com/author'
+  private desassociarUrl='https://rest-api-recursos-educacionais.herokuapp.com/desassociar'
+  private associarUrl='https://rest-api-recursos-educacionais.herokuapp.com/associar'
 
   retrieveRecents(): Observable<Recurso>{
     return this.httpClient.get<Recurso>(this.recursoRecentUrl);

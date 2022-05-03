@@ -10,9 +10,9 @@ import { Recurso } from '../models/Recurso';
 export class CursoService {
 
   constructor(private httpClient: HttpClient) {}
-  private cursoRecentUrl='http://localhost:8080/curso/recentes'
-  private cursoUrl='http://localhost:8080/curso'
-  private associateCursoEventoUrl='http://localhost:8080/recurso'
+  private cursoRecentUrl='https://rest-api-recursos-educacionais.herokuapp.com/curso/recentes'
+  private cursoUrl='https://rest-api-recursos-educacionais.herokuapp.com/curso'
+  private associateCursoEventoUrl='https://rest-api-recursos-educacionais.herokuapp.com/recurso'
   
 
   

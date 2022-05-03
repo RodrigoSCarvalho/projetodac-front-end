@@ -11,9 +11,9 @@ export class EventoService {
 
 
   constructor(private httpClient: HttpClient) { }
-  private eventoRecentUrl = 'http://localhost:8080/evento/recentes'
-  private eventoUrl = 'http://localhost:8080/evento'
-  private associateEventoRecursoUrl='http://localhost:8080/recurso'
+  private eventoRecentUrl = 'https://rest-api-recursos-educacionais.herokuapp.com/evento/recentes'
+  private eventoUrl = 'https://rest-api-recursos-educacionais.herokuapp.com/evento'
+  private associateEventoRecursoUrl='https://rest-api-recursos-educacionais.herokuapp.com/recurso'
 
   retrieveRecents(): Observable<Evento> {
     return this.httpClient.get<Evento>(this.eventoRecentUrl);

@@ -10,9 +10,9 @@ import { Recurso } from '../models/Recurso';
 export class AutorService {
 
   constructor(private httpClient: HttpClient) {}
-  private autorRecentUrl='http://localhost:8080/author/recentes'
-  private autorUrl='http://localhost:8080/author'
-  private recursoUrl='http://localhost:8080/recurso'
+  private autorRecentUrl='https://rest-api-recursos-educacionais.herokuapp.com/author/recentes'
+  private autorUrl='https://rest-api-recursos-educacionais.herokuapp.com/author'
+  private recursoUrl='https://rest-api-recursos-educacionais.herokuapp.com/recurso'
 
   retrieveRecents(): Observable<Autor>{
     return this.httpClient.get<Autor>(this.autorRecentUrl);
