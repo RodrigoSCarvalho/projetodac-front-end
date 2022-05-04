@@ -28,7 +28,7 @@
             <td><a href={{resourse.link}} target="_blank">{{resourse.link}}</a></td>
             <td>{{resourse.data_criacao | mask: '0000-00-00'}}</td>
             <td>{{resourse.data_registro | mask: '0000-00-00'}}</td>
-            <td>{{resourse.palavras_chave.join(' ')}}</td>
+            <td>{{resourse.palavras_chave.join(', ')}}</td>
             <td><button (click)="onView(resourse.id)" style="background: transparent; border: none;"><img src="./assets/view.svg" alt="View"></button></td>
             <td><button class="btn-excluir" name={{resourse.titulo}} value={{resourse.id}}
                 (click)="openPopup(resourse.id, resourse.titulo)" style="background: transparent; border: none;"><img
