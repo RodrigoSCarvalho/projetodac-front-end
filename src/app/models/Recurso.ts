@@ -7,6 +7,6 @@ export class Recurso {
     'descricao'?: string;
     'link'?: string;
     'imagem'?: string;
-    'data_criacao'?: string;
-    'data_registro'?: string;
+    'data_criacao': string;
+    'data_registro': string;
   }
