@@ -23,8 +23,8 @@
             <td><img src={{events.imagem}} width="40" height="40" alt= /></td>
             <td>{{events.titulo}}</td>
             <td>{{events.descricao}}</td>
-            <td>{{events.data_criacao}}</td>
-            <td>{{events.data_fim}}</td>
+            <td>{{events.data_criacao | mask: '0000/00/00'}}</td>
+            <td>{{events.data_fim | mask: '0000/00/00'}}</td>
             <td><button (click)="onView(events.id)" style="background: transparent; border: none;"><img src="./assets/view.svg" alt="View" ></button></td>
             <td><button class="btn-excluir" name={{events.titulo}} value={{events.id}}
                 (click)="openPopup(events.id, events.titulo)" style="background: transparent; border: none;"><img
