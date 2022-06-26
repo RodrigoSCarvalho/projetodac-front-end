@@ -8,7 +8,6 @@ import { Location } from '@angular/common';
 import { map, switchMap } from 'rxjs';
 import { Recurso } from 'src/app/models/Recurso';
 import { NotifierService } from 'angular-notifier';
-import { Options } from 'select2';
 import { Select2OptionData } from 'ng-select2';
 
 @Component({
@@ -27,8 +26,6 @@ export class RecursoAddComponent implements OnInit {
   isEdit: boolean = false;
   associarAutor = false;
   private readonly notifier: NotifierService;
-  public options!: Options;
-  public exampleData!: Array<Select2OptionData>;
 
   
   constructor(
