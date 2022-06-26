@@ -21,7 +21,6 @@ import { RecursoViewComponent } from './recurso/recurso-view/recurso-view.compon
 import { RecursoEditComponent } from './recurso/recurso-edit/recurso-edit.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
-import { NgSelect2Module } from 'ng-select2';
 import { AutorComponent } from './autor/autor.component';
 import { AutorViewComponent } from './autor/autor-view/autor-view.component';
 import { AutorAddComponent } from './autor/autor-add/autor-add.component';
@@ -103,7 +102,6 @@ const maskConfig: Partial<IConfig> = {
     FormsModule,
     NgxMaskModule.forRoot(maskConfig),
     NotifierModule.withConfig(customNotifierOptions),
-    NgSelect2Module
   ],
   providers: [],
   bootstrap: [AppComponent],

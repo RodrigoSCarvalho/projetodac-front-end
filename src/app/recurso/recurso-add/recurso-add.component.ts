@@ -1,14 +1,13 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NotifierService } from 'angular-notifier';
+import { map, switchMap } from 'rxjs';
 import { Autor } from 'src/app/models/Autor';
+import { Recurso } from 'src/app/models/Recurso';
 import { AutorService } from 'src/app/services/autor.service';
 import { RecursoService } from 'src/app/services/recurso.service';
-import { Location } from '@angular/common';
-import { map, switchMap } from 'rxjs';
-import { Recurso } from 'src/app/models/Recurso';
-import { NotifierService } from 'angular-notifier';
-import { Select2OptionData } from 'ng-select2';
 
 @Component({
   selector: 'app-recurso-add',
