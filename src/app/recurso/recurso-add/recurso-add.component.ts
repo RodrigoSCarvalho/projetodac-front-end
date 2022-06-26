@@ -46,31 +46,6 @@ export class RecursoAddComponent implements OnInit {
   ngOnInit(): void {
     this.recursoId = this.route.snapshot.params['id'];
 
-    this.exampleData = [
-      {
-        id: 'multiple1',
-        text: 'Multiple 1'
-      },
-      {
-        id: 'multiple2',
-        text: 'Multiple 2'
-      },
-      {
-        id: 'multiple3',
-        text: 'Multiple 3'
-      },
-      {
-        id: 'multiple4',
-        text: 'Multiple 4'
-      }
-    ];
-
-    this.options = {
-      width: '300',
-      multiple: true,
-      tags: true
-    }
-
     this._value = ['multiple2', 'multiple4'];
 
     if (this.recursoId === undefined) {
