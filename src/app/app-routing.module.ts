@@ -1,7 +1,5 @@
-import { LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { ModuleWithProviders } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
+import { RouterModule, Routes } from '@angular/router';
+
 import { AutorAddComponent } from './autor/autor-add/autor-add.component';
 import { AutorViewComponent } from './autor/autor-view/autor-view.component';
 import { AutorComponent } from './autor/autor.component';

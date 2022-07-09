@@ -46,7 +46,7 @@ export class CursoAddComponent implements OnInit {
       imagem: [null, [Validators.minLength(2)]],
       data_registro: [
         null,
-        [Validators.minLength(8), Validators.maxLength(12)],
+        [Validators.minLength(8), Validators.maxLength(10)],
       ],
     });
   }

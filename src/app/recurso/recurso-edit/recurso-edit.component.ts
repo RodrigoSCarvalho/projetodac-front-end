@@ -29,6 +29,9 @@ export class RecursoEditComponent implements OnInit {
   form!: FormGroup;
   submmited = false;
   @ViewChild('palavras') inputPalavras: any;
+  criacao!: number;
+  registro!: number;
+  dataValid: boolean = true;
 
   ngOnInit(): void {
     this.recursoId = this.route.snapshot.params['id'];
@@ -58,7 +61,7 @@ export class RecursoEditComponent implements OnInit {
       ],
       data_registro: [
         null,
-        [Validators.minLength(8), Validators.maxLength(12)],
+        [Validators.minLength(8), Validators.maxLength(10)],
       ],
     });
   }
@@ -151,4 +154,19 @@ export class RecursoEditComponent implements OnInit {
     });
   }
 
+  handleDataCriacao(data_criacao: string) {
+    this.criacao = parseInt(data_criacao.replace("-", ""));
+    
+    if(this.criacao > this.registro){
+      this.dataValid = false;
+    }else{
+      this.dataValid = true;
+    }
+  }
+  handleDataRegistro(data_registro: string) {
+    this.registro = parseInt(data_registro.replace("-", ""));
+    if(this.criacao > this.registro){
+      this.dataValid = false;
+    }
+  }
 }

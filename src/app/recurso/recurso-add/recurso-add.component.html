@@ -1,29 +1,15 @@
 <div class="container bg-light">
   <app-navbar></app-navbar>
-  
+
   <div class="row"></div>
   <div class="row d-flex overflow-auto mb-5">
     <div class="col d-flex justify-content-center">
-      <form
-        (ngSubmit)="onSubmit()"
-        class="needs-validation pb-5"
-        novalidate
-        [formGroup]="form"
-        *ngIf="form"
-      >
+      <form (ngSubmit)="onSubmit()" class="needs-validation pb-5" novalidate [formGroup]="form" *ngIf="form">
         <div class="mb-3" *ngIf="!isEdit">
           <label for="selectAutor" class="form-label">Selecione o autor</label>
-          <select
-            class="form-select"
-            id="selectAutor"
-            aria-label="Default select example"
-          >
+          <select class="form-select" id="selectAutor" aria-label="Default select example">
             <option>Selecione</option>
-            <option
-              *ngFor="let author of autores"
-              value="{{ author.id }}"
-              (click)="onChange(author.id)"
-            >
+            <option *ngFor="let author of autores" value="{{ author.id }}" (click)="onChange(author.id)">
               {{ author.nome }}
             </option>
           </select>
@@ -31,12 +17,7 @@
 
         <div class="mb-3" *ngIf="isEdit && autoresDisponiveis.length > 0">
           <label for="selectAutor" class="form-label">Deseja associar a um novo autor?</label>
-          <select
-            class="form-select"
-            id="selectAutor"
-            aria-label="Default select example"
-            (change)="onChoice()"
-          >
+          <select class="form-select" id="selectAutor" aria-label="Default select example" (change)="onChoice()">
             <option selected>Não</option>
             <option>
               Sim
@@ -47,17 +28,9 @@
 
         <div class="mb-3" *ngIf="associarAutor">
           <label for="selectAutor" class="form-label">Selecione o autor</label>
-          <select
-            class="form-select"
-            id="selectAutor"
-            aria-label="Default select example"
-          >
+          <select class="form-select" id="selectAutor" aria-label="Default select example">
             <option>Selecione</option>
-            <option
-              *ngFor="let author of autoresDisponiveis"
-              value="{{ author.id }}"
-              (click)="onChange(author.id)"
-            >
+            <option *ngFor="let author of autoresDisponiveis" value="{{ author.id }}" (click)="onChange(author.id)">
               {{ author.nome }} {{ author.sobrenome}}
             </option>
           </select>
@@ -66,87 +39,37 @@
 
         <div class="mb-3">
           <label for="tituloInput" class="form-label">Título</label>
-          <input
-            type="text"
-            class="form-control"
-            id="tituloInput"
-            formControlName="titulo"
-          />
+          <input type="text" class="form-control" id="tituloInput" formControlName="titulo" />
         </div>
         <div class="mb-3">
           <label for="descricaoInput" class="form-label">Descrição</label>
-          <textarea
-            type="text"
-            class="form-control"
-            id="descricaoInput"
-            formControlName="descricao"
-          ></textarea>
+          <textarea type="text" class="form-control" id="descricaoInput" formControlName="descricao"></textarea>
         </div>
         <div class="mb-3">
           <label for="linkInput" class="form-label">Link</label>
-          <input
-            type="text"
-            class="form-control"
-            id="linkInput"
-            formControlName="link"
-          />
+          <input type="text" class="form-control" id="linkInput" formControlName="link" />
         </div>
         <div class="mb-3">
           <label for="imagemInput" class="form-label">Imagem</label>
-          <input
-            type="link"
-            class="form-control"
-            id="imagemInput"
-            aria-describedby="imagemHelp"
-            formControlName="imagem"
-          />
+          <input type="link" class="form-control" id="imagemInput" aria-describedby="imagemHelp" formControlName="imagem" />
           <div id="imagemHelp" class="form-text">
             Envie o link de uma imagem hospedada online.
           </div>
         </div>
         <div class="mb-3">
-          <label for="datacriacaoInput" class="form-label"
-            >Data de Criação</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="datacriacaoInput"
-            formControlName="data_criacao"
-            mask="0000-00-00"
-          />
+          <label for="datacriacaoInput" class="form-label">Data de Criação</label>
+          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="datacriacaoInput" formControlName="data_criacao" #criacao (keyup)="handleDataCriacao(criacao.value)" />
         </div>
         <div class="mb-4">
-          <label for="dataregistroInput" class="form-label"
-            >Data de Registro</label
-          >
-          <input
-            type="text"
-            mask="0000-00-00"
-            class="form-control"
-            id="dataregistroInput"
-            formControlName="data_registro"
-            
-          />
+          <label for="dataregistroInput" class="form-label">Data de Registro</label>
+          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="dataregistroInput" formControlName="data_registro" #registro (keyup)="handleDataRegistro(registro.value)" />
         </div>
+        <p class="mb-2 text-secondary fst-italic fw-light" *ngIf="!dataValid">Data registro deve ser posterior a data de criação</p>
         <div class="mb-3">
-          <label for="palavrasChaveInput" class="form-label"
-            >Palavras-Chave</label
-          >
+          <label for="palavrasChaveInput" class="form-label">Palavras-Chave</label>
           <div class="input-group">
-            <input
-              #palavras
-              type="text"
-              class="form-control"
-              id="palavrasChaveInput"
-              aria-describedby="palavrasChaveHelp"
-              />
-            <button
-              class="btn btn-outline-success"
-              type="button"
-              id="button-addon2"
-              (click)="addPalavras(palavras.value)"
-            >
+            <input #palavras type="text" class="form-control" id="palavrasChaveInput" aria-describedby="palavrasChaveHelp" />
+            <button class="btn btn-outline-success" type="button" id="button-addon2" (click)="addPalavras(palavras.value)">
               +
             </button>
           </div>
@@ -157,34 +80,20 @@
             <li *ngFor="let item of palavrasChave">{{ item }}</li>
           </div>
         </div>
-          <div class="d-flex justify-content-center mb-3">
-            <button
-              class="btn btn-outline-secondary mx-2"
-              type="button"
-              id="button-addon2"
-              (click)="removePalavras()"
-            >
-              Remover
-            </button>
-            <button
-            class="btn btn-outline-danger mx-2"
-            type="button"
-            id="button-addon2"
-            (click)="cleanPalavras()"
-          >
+        <div class="d-flex justify-content-center mb-3">
+          <button class="btn btn-outline-secondary mx-2" type="button" id="button-addon2" (click)="removePalavras()">
+            Remover
+          </button>
+          <button class="btn btn-outline-danger mx-2" type="button" id="button-addon2" (click)="cleanPalavras()">
             Limpar
           </button>
-          </div>
+        </div>
 
         <div class="mb-3 mt-3 text-center">
-          <button
-          type="button"
-          class="btn btn-secondary align-center mx-2"
-          (click)="getBack()"
-        >
-          Voltar
-        </button>
-          <button type="submit" class="btn btn-dark align-center mx-2">
+          <button type="button" class="btn btn-secondary align-center mx-2" (click)="getBack()">
+            Voltar
+          </button>
+          <button type="submit" class="btn btn-dark align-center mx-2" [disabled]="!dataValid">
             Salvar
           </button>
         </div>

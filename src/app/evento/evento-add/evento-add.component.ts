@@ -20,6 +20,9 @@ export class EventoAddComponent implements OnInit {
   associarRecurso = false;
   recursoId!: number;
   recursos: Recurso[] = [];
+  criacao!: number;
+  fim!: number;
+  dataValid: boolean = true;
   private readonly notifier: NotifierService;
   
   constructor(
@@ -47,8 +50,8 @@ export class EventoAddComponent implements OnInit {
       titulo: [null, [Validators.minLength(2), Validators.maxLength(200)]],
       descricao: [null, [Validators.minLength(2), Validators.maxLength(400)]],
       imagem: [null, [Validators.minLength(2)]],
-      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
-      data_fim: [null, [Validators.minLength(8), Validators.maxLength(12)]],
+      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(10)]],
+      data_fim: [null, [Validators.minLength(8), Validators.maxLength(10)]],
     });
   }
 
@@ -86,6 +89,9 @@ export class EventoAddComponent implements OnInit {
         );
       }
     }
+    if(this.criacao > this.fim){
+      this.dataValid = false;
+    }
   }
   onCancel(): void {
     this.submmited = false;
@@ -110,6 +116,26 @@ export class EventoAddComponent implements OnInit {
 
   onChange(id: number) {
     this.recursoId = id;
+  }
+
+  handleDataCriacao(data_criacao: string) {
+    this.criacao = parseInt(data_criacao.replace("-", ""));
+    console.log("criacao: ", this.criacao);
+    
+    if(this.criacao > this.fim){
+      this.dataValid = false;
+    }else{
+      this.dataValid = true;
+    }
+    console.log("dataValidCriacao: ", this.dataValid);
+  }
+  handleDataFim(data_fim: string) {
+    this.fim = parseInt(data_fim.replace("-", ""));
+    console.log("fim: ", this.fim);
+    if(this.criacao > this.fim){
+      this.dataValid = false;
+    }
+    console.log("dataValidFim: ", this.dataValid);
   }
 
   

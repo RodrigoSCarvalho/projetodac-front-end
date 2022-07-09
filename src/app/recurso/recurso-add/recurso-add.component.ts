@@ -24,6 +24,9 @@ export class RecursoAddComponent implements OnInit {
   recursoId: number = 0;
   isEdit: boolean = false;
   associarAutor = false;
+  criacao!: number;
+  registro!: number;
+  dataValid: boolean = true;
   private readonly notifier: NotifierService;
 
   
@@ -79,7 +82,7 @@ export class RecursoAddComponent implements OnInit {
       data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
       data_registro: [
         null,
-        [Validators.minLength(8), Validators.maxLength(12)],
+        [Validators.minLength(8), Validators.maxLength(10)],
       ],
     });
   }
@@ -242,6 +245,22 @@ export class RecursoAddComponent implements OnInit {
 
   getBack(): void {
     this._location.back();
+  }
+  
+  handleDataCriacao(data_criacao: string) {
+    this.criacao = parseInt(data_criacao.replace("-", ""));
+    
+    if(this.criacao > this.registro){
+      this.dataValid = false;
+    }else{
+      this.dataValid = true;
+    }
+  }
+  handleDataRegistro(data_registro: string) {
+    this.registro = parseInt(data_registro.replace("-", ""));
+    if(this.criacao > this.registro){
+      this.dataValid = false;
+    }
   }
 
 }

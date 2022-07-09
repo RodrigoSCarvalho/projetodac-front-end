@@ -41,10 +41,10 @@ export class AutorAddComponent implements OnInit {
 
     this.form = this.formBuilder.group({
       id: [null],
-      orcid: [null],
+      orcid: [null, [Validators.minLength(16), Validators.maxLength(19)]],
       nome: [null, [Validators.minLength(2), Validators.maxLength(200)]],
       sobrenome: [null, [Validators.minLength(2), Validators.maxLength(400)]],
-      email: [null, [Validators.minLength(2), Validators.maxLength(400)]],
+      email: [null, [Validators.minLength(3), Validators.maxLength(400), Validators.email]],
       afiliacao: [null, [Validators.minLength(2)]],
     });
   }
