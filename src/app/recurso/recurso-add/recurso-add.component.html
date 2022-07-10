@@ -58,11 +58,11 @@
         </div>
         <div class="mb-3">
           <label for="datacriacaoInput" class="form-label">Data de Criação</label>
-          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="datacriacaoInput" formControlName="data_criacao" #criacao (keyup)="handleDataCriacao(criacao.value)" />
+          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="datacriacaoInput" formControlName="data_criacao" #criacao (blur)="handleDataCriacao(criacao.value)" (keyup)="handleDataCriacao(criacao.value)" />
         </div>
         <div class="mb-4">
           <label for="dataregistroInput" class="form-label">Data de Registro</label>
-          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="dataregistroInput" formControlName="data_registro" #registro (keyup)="handleDataRegistro(registro.value)" />
+          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="dataregistroInput" formControlName="data_registro" #registro (keyup)="handleDataRegistro(registro.value)" (blur)="handleDataRegistro(registro.value)" />
         </div>
         <p class="mb-2 text-secondary fst-italic fw-light" *ngIf="!dataValid">Data registro deve ser posterior a data de criação</p>
         <div class="mb-3">

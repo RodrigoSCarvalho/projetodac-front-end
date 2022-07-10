@@ -48,7 +48,9 @@ export class RecursoAddComponent implements OnInit {
   ngOnInit(): void {
     this.recursoId = this.route.snapshot.params['id'];
 
-    this._value = ['multiple2', 'multiple4'];
+    if(this.criacao > this.registro){
+      this.dataValid = false;
+    }
 
     if (this.recursoId === undefined) {
       this.recursoId = 0;
@@ -248,19 +250,28 @@ export class RecursoAddComponent implements OnInit {
   }
   
   handleDataCriacao(data_criacao: string) {
-    this.criacao = parseInt(data_criacao.replace("-", ""));
+    let criacaoReplace = data_criacao.replace("-", "");
+    this.criacao = parseInt(criacaoReplace.replace("-", ""));
+    console.log("criacao: ", this.criacao);
     
     if(this.criacao > this.registro){
       this.dataValid = false;
     }else{
       this.dataValid = true;
     }
+    console.log("dataValidCriacao: ", this.dataValid);
   }
   handleDataRegistro(data_registro: string) {
-    this.registro = parseInt(data_registro.replace("-", ""));
+    let registroReplace = data_registro.replace("-", "");
+    this.registro = parseInt(registroReplace.replace("-", ""));
+    console.log("registro: ", this.registro);
     if(this.criacao > this.registro){
       this.dataValid = false;
     }
+    else{
+      this.dataValid = true;
+    }
+    console.log("dataValidRegistro: ", this.dataValid);
   }
 
 }
