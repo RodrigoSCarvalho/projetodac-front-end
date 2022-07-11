@@ -15,7 +15,7 @@
           </select>
         </div>
 
-        <div class="mb-3" *ngIf="isEdit && autoresDisponiveis.length > 0">
+        <div class="form-group mb-3" *ngIf="isEdit && autoresDisponiveis.length > 0">
           <label for="selectAutor" class="form-label">Deseja associar a um novo autor?</label>
           <select class="form-select" id="selectAutor" aria-label="Default select example" (change)="onChoice()">
             <option selected>Não</option>
@@ -26,7 +26,7 @@
         </div>
 
 
-        <div class="mb-3" *ngIf="associarAutor">
+        <div class="form-group mb-3" *ngIf="associarAutor">
           <label for="selectAutor" class="form-label">Selecione o autor</label>
           <select class="form-select" id="selectAutor" aria-label="Default select example">
             <option>Selecione</option>
@@ -37,34 +37,38 @@
         </div>
 
 
-        <div class="mb-3">
+        <div class="form-group mb-3">
           <label for="tituloInput" class="form-label">Título</label>
           <input type="text" class="form-control" id="tituloInput" formControlName="titulo" />
         </div>
-        <div class="mb-3">
+        <div class="form-group mb-3">
           <label for="descricaoInput" class="form-label">Descrição</label>
           <textarea type="text" class="form-control" id="descricaoInput" formControlName="descricao"></textarea>
         </div>
-        <div class="mb-3">
+        <div class=" form-group mb-3">
           <label for="linkInput" class="form-label">Link</label>
           <input type="text" class="form-control" id="linkInput" formControlName="link" />
         </div>
-        <div class="mb-3">
+        <div class=" form-group mb-3">
           <label for="imagemInput" class="form-label">Imagem</label>
           <input type="link" class="form-control" id="imagemInput" aria-describedby="imagemHelp" formControlName="imagem" />
           <div id="imagemHelp" class="form-text">
             Envie o link de uma imagem hospedada online.
           </div>
         </div>
-        <div class="mb-3">
+        <div class="form-group mb-3">
           <label for="datacriacaoInput" class="form-label">Data de Criação</label>
-          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="datacriacaoInput" formControlName="data_criacao" #criacao (blur)="handleDataCriacao(criacao.value)" (keyup)="handleDataCriacao(criacao.value)" />
+          <input type="text" class="form-control" id="datacriacaoInput" mask="0000-00-00" pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" [dropSpecialCharacters]="false" formControlName="data_criacao" #criacao (blur)="handleDataCriacao(criacao.value)" (keyup)="handleDataCriacao(criacao.value)" />
+          <span class="text-danger" *ngIf="dataCriacao?.invalid && dataCriacao?.touched"> Data de Criação inválida </span>
         </div>
-        <div class="mb-4">
+        <div class=" form-group mb-4">
           <label for="dataregistroInput" class="form-label">Data de Registro</label>
-          <input type="text" mask="0000-00-00" [dropSpecialCharacters]="false" class="form-control" id="dataregistroInput" formControlName="data_registro" #registro (keyup)="handleDataRegistro(registro.value)" (blur)="handleDataRegistro(registro.value)" />
+          <input type="text" class="form-control" id="dataregistroInput" formControlName="data_registro" pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" #registro (keyup)="handleDataRegistro(registro.value)" (blur)="handleDataRegistro(registro.value)" mask="0000-00-00" [dropSpecialCharacters]="false" />
+          <span class="text-danger" *ngIf="dataRegistro?.invalid && dataRegistro?.touched"> Data de Registro inválida </span>
+          <div class="form-text text-danger mb-3" *ngIf="!dataValid">
+            Data de Registro precisa ser posterior a data de criação
+          </div>
         </div>
-        <p class="mb-2 text-secondary fst-italic fw-light" *ngIf="!dataValid">Data registro deve ser posterior a data de criação</p>
         <div class="mb-3">
           <label for="palavrasChaveInput" class="form-label">Palavras-Chave</label>
           <div class="input-group">
@@ -82,18 +86,18 @@
         </div>
         <div class="d-flex justify-content-center mb-3">
           <button class="btn btn-outline-secondary mx-2" type="button" id="button-addon2" (click)="removePalavras()">
-            Remover
+            -
           </button>
           <button class="btn btn-outline-danger mx-2" type="button" id="button-addon2" (click)="cleanPalavras()">
-            Limpar
+            <img src="../../../../assets/clean.svg" height="12px" width="12px" alt="Limpar" />
           </button>
         </div>
 
         <div class="mb-3 mt-3 text-center">
-          <button type="button" class="btn btn-secondary align-center mx-2" (click)="getBack()">
+          <button type="button" class="btn btn-warning align-center mx-2" (click)="getBack()">
             Voltar
           </button>
-          <button type="submit" class="btn btn-dark align-center mx-2" [disabled]="!dataValid">
+          <button type="submit" class="btn btn-dark align-center mx-2" [disabled]="!form.valid">
             Salvar
           </button>
         </div>

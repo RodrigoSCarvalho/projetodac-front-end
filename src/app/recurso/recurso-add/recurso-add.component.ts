@@ -27,9 +27,9 @@ export class RecursoAddComponent implements OnInit {
   criacao!: number;
   registro!: number;
   dataValid: boolean = true;
+  dataRegex: string = '^d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$';
   private readonly notifier: NotifierService;
 
-  
   constructor(
     private _autorService: AutorService,
     private formBuilder: FormBuilder,
@@ -48,7 +48,7 @@ export class RecursoAddComponent implements OnInit {
   ngOnInit(): void {
     this.recursoId = this.route.snapshot.params['id'];
 
-    if(this.criacao > this.registro){
+    if (this.criacao > this.registro) {
       this.dataValid = false;
     }
 
@@ -81,7 +81,7 @@ export class RecursoAddComponent implements OnInit {
       palavras_chave: [this.palavrasChave],
       imagem: [null, [Validators.minLength(2)]],
       link: [null, [Validators.minLength(2)]],
-      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
+      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(10)]],
       data_registro: [
         null,
         [Validators.minLength(8), Validators.maxLength(10)],
@@ -115,7 +115,10 @@ export class RecursoAddComponent implements OnInit {
             .subscribe(
               (success) => {
                 this._location.back();
-                this.notifier.notify('success', "Recurso alterado com sucesso!");
+                this.notifier.notify(
+                  'success',
+                  'Recurso alterado com sucesso!'
+                );
               },
               (error) => console.log(error),
               () => console.log('request OK')
@@ -123,12 +126,15 @@ export class RecursoAddComponent implements OnInit {
         } else {
           console.log('submit: ' + this.palavrasChave);
           this.form.patchValue({ palavras_chave: this.palavrasChave });
-          this._recursoService          
+          this._recursoService
             .saveRecurso(this.autorId, this.form.value)
             .subscribe(
               (success) => {
                 this._location.back();
-                this.notifier.notify('success', "Recurso cadastrado com sucesso!");
+                this.notifier.notify(
+                  'success',
+                  'Recurso cadastrado com sucesso!'
+                );
               },
               (error) => console.log(error),
               () => console.log('request OK')
@@ -145,7 +151,7 @@ export class RecursoAddComponent implements OnInit {
           .subscribe(
             (success) => {
               this._location.back();
-              this.notifier.notify('success', "Recurso alterado com sucesso!");
+              this.notifier.notify('success', 'Recurso alterado com sucesso!');
             },
             (error) => console.log(error),
             () => console.log('request OK')
@@ -165,14 +171,17 @@ export class RecursoAddComponent implements OnInit {
   removePalavras(): void {
     if (this.palavrasChave.length > 0) {
       this.palavrasChave.splice(-1);
-      this.notifier.notify('default', "Última palavra-chave removida com sucesso!");
+      this.notifier.notify(
+        'default',
+        'Última palavra-chave removida com sucesso!'
+      );
     }
   }
 
   cleanPalavras(): void {
     if (this.palavrasChave.length > 0) {
       this.palavrasChave = [];
-      this.notifier.notify('error', "Palavras-chave limpas com sucesso!");
+      this.notifier.notify('error', 'Palavras-chave limpas com sucesso!');
     }
   }
 
@@ -233,7 +242,7 @@ export class RecursoAddComponent implements OnInit {
     this.palavrasChave.push(palavra);
     console.log(this.palavrasChave);
     this.inputPalavras.nativeElement.value = '';
-    let notifica = "Palavra: " +palavra+ " adicionada com sucesso!" 
+    let notifica = 'Palavra: ' + palavra + ' adicionada com sucesso!';
     this.notifier.notify('success', notifica);
   }
 
@@ -248,30 +257,48 @@ export class RecursoAddComponent implements OnInit {
   getBack(): void {
     this._location.back();
   }
-  
+
   handleDataCriacao(data_criacao: string) {
-    let criacaoReplace = data_criacao.replace("-", "");
-    this.criacao = parseInt(criacaoReplace.replace("-", ""));
-    console.log("criacao: ", this.criacao);
-    
-    if(this.criacao > this.registro){
+    let criacaoReplace = data_criacao.replace('-', '');
+    this.criacao = parseInt(criacaoReplace.replace('-', ''));
+    console.log('criacao: ', this.criacao);
+
+    if (this.criacao > this.registro) {
       this.dataValid = false;
-    }else{
+    } else {
       this.dataValid = true;
     }
-    console.log("dataValidCriacao: ", this.dataValid);
+    console.log('dataValidCriacao: ', this.dataValid);
   }
   handleDataRegistro(data_registro: string) {
-    let registroReplace = data_registro.replace("-", "");
-    this.registro = parseInt(registroReplace.replace("-", ""));
-    console.log("registro: ", this.registro);
-    if(this.criacao > this.registro){
+    let registroReplace = data_registro.replace('-', '');
+    this.registro = parseInt(registroReplace.replace('-', ''));
+    console.log('registro: ', this.registro);
+    if (this.criacao > this.registro) {
       this.dataValid = false;
-    }
-    else{
+    } else {
       this.dataValid = true;
     }
-    console.log("dataValidRegistro: ", this.dataValid);
+    console.log('dataValidRegistro: ', this.dataValid);
   }
 
+  get dataCriacao() {
+    return this.form.get('data_criacao');
+  }
+
+  get dataRegistro() {
+    return this.form.get('data_registro');
+  }
+
+  get datasValidas(): boolean {
+    console.log(Number(this.form.get('data_criacao')));
+    if (
+      Number(this.form.get('data_criacao')) >
+      Number(this.form.get('data_registro'))
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }
