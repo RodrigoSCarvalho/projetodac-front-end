@@ -37,15 +37,16 @@
             Envie o link de uma imagem hospedada online.
           </div>
         </div>
-        <div class="mb-3">
-          <label for="datacriacaoInput" class="form-label">Data de Registro</label>
-          <input type="text" class="form-control" id="datacriacaoInput" formControlName="data_registro" mask="0000-00-00" [dropSpecialCharacters]="false" matInput />
+        <div class=" form-group mb-4">
+          <label for="dataregistroInput" class="form-label">Data de Registro</label>
+          <input type="text" class="form-control" id="dataregistroInput" formControlName="data_registro" pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" mask="0000-00-00" [dropSpecialCharacters]="false" />
+          <span class="text-danger" *ngIf="dataRegistro?.invalid && dataRegistro?.touched"> Data de Registro inválida </span>
         </div>
         <div class="mb-3 text-center">
-          <button type="button" class="btn btn-secondary align-center mx-2" (click)="getBack()">
+          <button type="button" class="btn btn-warning align-center mx-2" (click)="getBack()">
             Voltar
           </button>
-          <button type="submit" class="btn btn-dark align-center mx-2">
+          <button type="submit" class="btn btn-dark align-center mx-2" [disabled]="!form.valid">
             Salvar
           </button>
         </div>

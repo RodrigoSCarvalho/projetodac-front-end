@@ -31,7 +31,6 @@ export class AutorAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.route.params
       .pipe(
         map((params: any) => params['id']),
@@ -44,7 +43,10 @@ export class AutorAddComponent implements OnInit {
       orcid: [null, [Validators.minLength(16), Validators.maxLength(19)]],
       nome: [null, [Validators.minLength(2), Validators.maxLength(200)]],
       sobrenome: [null, [Validators.minLength(2), Validators.maxLength(400)]],
-      email: [null, [Validators.minLength(3), Validators.maxLength(400), Validators.email]],
+      email: [
+        null,
+        [Validators.minLength(3), Validators.maxLength(400), Validators.email],
+      ],
       afiliacao: [null, [Validators.minLength(2)]],
     });
   }
@@ -77,7 +79,11 @@ export class AutorAddComponent implements OnInit {
     this.submmited = false;
     this.form.reset();
   }
-  
+
+  get orcid() {
+    return this.form.get('orcid');
+  }
+
   getBack(): void {
     this._location.back();
   }

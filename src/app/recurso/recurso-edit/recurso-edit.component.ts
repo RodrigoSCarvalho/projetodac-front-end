@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Autor } from 'src/app/models/Autor';
 import { AutorService } from 'src/app/services/autor.service';
 import { RecursoService } from 'src/app/services/recurso.service';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
 import { Recurso } from 'src/app/models/Recurso';
@@ -11,7 +11,7 @@ import { Recurso } from 'src/app/models/Recurso';
 @Component({
   selector: 'app-recurso-edit',
   templateUrl: './recurso-edit.component.html',
-  styleUrls: ['./recurso-edit.component.css']
+  styleUrls: ['./recurso-edit.component.css'],
 })
 export class RecursoEditComponent implements OnInit {
   autores: Autor[] = [];
@@ -36,7 +36,7 @@ export class RecursoEditComponent implements OnInit {
   ngOnInit(): void {
     this.recursoId = this.route.snapshot.params['id'];
     this.retrievePalavrasChave();
-    
+
     this.retrieveAllAutores();
     this.retrieveRecurso();
     this.retrievePalavrasChave();
@@ -52,13 +52,10 @@ export class RecursoEditComponent implements OnInit {
       id: [null],
       titulo: [null, [Validators.minLength(2), Validators.maxLength(200)]],
       descricao: [null, [Validators.minLength(2), Validators.maxLength(400)]],
-      palavras_chave: [this.palavrasChave] ,
+      palavras_chave: [this.palavrasChave],
       imagem: [null, [Validators.minLength(2)]],
       link: [null, [Validators.minLength(2)]],
-      data_criacao: [
-        null,
-        [Validators.minLength(8), Validators.maxLength(12)],
-      ],
+      data_criacao: [null, [Validators.minLength(8), Validators.maxLength(12)]],
       data_registro: [
         null,
         [Validators.minLength(8), Validators.maxLength(10)],
@@ -93,15 +90,17 @@ export class RecursoEditComponent implements OnInit {
   onSubmit(): void {
     this.submmited = true;
     if (this.form.valid) {
-      console.log(this.palavrasChave)
+      console.log(this.palavrasChave);
       //this.form.controls['palavras_chave'].patchValue(this.palavras)
-      this._recursoService.updateRecurso(this.recursoId, this.form.value).subscribe(
-        (success) => {
-          this._location.back();
-        },
-        (error) => console.log(error),
-        () => console.log('request OK')
-      );
+      this._recursoService
+        .updateRecurso(this.recursoId, this.form.value)
+        .subscribe(
+          (success) => {
+            this._location.back();
+          },
+          (error) => console.log(error),
+          () => console.log('request OK')
+        );
     }
   }
   onCancel(): void {
@@ -109,7 +108,7 @@ export class RecursoEditComponent implements OnInit {
     this.form.reset();
   }
 
-/*
+  /*
   get palavrasChave() : FormArray {
     return this.form.get("palavras_chave") as FormArray
   }
@@ -124,12 +123,12 @@ export class RecursoEditComponent implements OnInit {
   this.palavrasChave.push(this.newPalavrasChave());
 }
 */
-  addPalavras(palavra: string){
+  addPalavras(palavra: string) {
     console.log(palavra);
     this.palavrasChave.push(palavra);
     console.log(this.palavrasChave);
     this.inputPalavras.nativeElement.value = '';
-    }
+  }
 
   retrieveAllAutores(): void {
     this._autorService.retrieveAll().subscribe({
@@ -155,18 +154,29 @@ export class RecursoEditComponent implements OnInit {
   }
 
   handleDataCriacao(data_criacao: string) {
-    this.criacao = parseInt(data_criacao.replace("-", ""));
-    
-    if(this.criacao > this.registro){
+    let criacaoReplace = data_criacao.replace('-', '');
+    this.criacao = parseInt(criacaoReplace.replace('-', ''));
+
+    if (this.criacao > this.registro) {
       this.dataValid = false;
-    }else{
+    } else {
       this.dataValid = true;
     }
   }
   handleDataRegistro(data_registro: string) {
-    this.registro = parseInt(data_registro.replace("-", ""));
-    if(this.criacao > this.registro){
+    let registroReplace = data_registro.replace('-', '');
+    this.registro = parseInt(registroReplace.replace('-', ''));
+    if (this.criacao > this.registro) {
       this.dataValid = false;
+    } else {
+      this.dataValid = true;
     }
+  }
+  get dataCriacao() {
+    return this.form.get('data_criacao');
+  }
+
+  get dataRegistro() {
+    return this.form.get('data_registro');
   }
 }

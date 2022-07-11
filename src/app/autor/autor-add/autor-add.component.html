@@ -6,9 +6,10 @@
   <div class="row d-flex">
     <div class="col d-flex justify-content-center">
       <form (ngSubmit)="onSubmit()" class="needs-validation" novalidate [formGroup]="form">
-        <div class="mb-3">
+        <div class="mb-3 form-group">
           <label for="orcidInput" class="form-label">Orcid</label>
-          <input type="text" class="form-control" id="orcidInput" formControlName="orcid" mask="0000-0000-0000-0000" [dropSpecialCharacters]="false" />
+          <input type="text" class="form-control" id="orcidInput" formControlName="orcid" mask="0000-0000-0000-0000" [dropSpecialCharacters]="false" pattern="^\d{4}-\d{4}-\d{4}-(\d{3}X|\d{4})$" />
+          <span class="text-danger" *ngIf="orcid?.invalid && orcid?.touched"> Data de Registro inválida </span>
         </div>
         <div class="mb-3">
           <label for="nomeInput" class="form-label">Nome</label>
@@ -27,10 +28,10 @@
           <input type="text" class="form-control" id="afiliacaoInput" formControlName="afiliacao" />
         </div>
         <div class="mb-3 text-center">
-          <button type="button" class="btn btn-secondary align-center mx-2" (click)="getBack()">
+          <button type="button" class="btn btn-warning align-center mx-2" (click)="getBack()">
             Voltar
           </button>
-          <button type="submit" class="btn btn-dark align-center mx-2">
+          <button type="submit" class="btn btn-dark align-center mx-2" [disabled]="!form.valid">
             Salvar
           </button>
         </div>

@@ -57,7 +57,6 @@ export class RecursoAddComponent implements OnInit {
     }
 
     this.associarAutor;
-    console.log(this.associarAutor);
 
     this.route.params
       .pipe(
@@ -103,13 +102,11 @@ export class RecursoAddComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.associarAutor);
     this.submmited = true;
     if (this.form.valid) {
       if (this.associarAutor == false) {
         if (this.isEdit) {
           this.form.patchValue({ palavras_chave: this.palavrasChave });
-          console.log('submit: ' + this.palavrasChave);
           this._recursoService
             .updateRecurso(this.recursoId, this.form.value)
             .subscribe(
@@ -124,7 +121,6 @@ export class RecursoAddComponent implements OnInit {
               () => console.log('request OK')
             );
         } else {
-          console.log('submit: ' + this.palavrasChave);
           this.form.patchValue({ palavras_chave: this.palavrasChave });
           this._recursoService
             .saveRecurso(this.autorId, this.form.value)
@@ -208,11 +204,9 @@ export class RecursoAddComponent implements OnInit {
   }
 
   retrievePalavrasChave(): void {
-    console.log(this.recursoId);
     this._recursoService.retrievePalavrasChave(this.recursoId).subscribe({
       next: (palavraChave: string[]) => {
         this.palavrasChave = palavraChave;
-        console.log('Palavra Chave Retrieve: ' + this.palavrasChave);
       },
       error: (err) => {
         alert('Error: ' + err);
@@ -234,13 +228,10 @@ export class RecursoAddComponent implements OnInit {
 
   onChoice(): void {
     this.associarAutor = !this.associarAutor;
-    console.log(this.associarAutor);
   }
 
   addPalavras(palavra: string) {
-    console.log(palavra);
     this.palavrasChave.push(palavra);
-    console.log(this.palavrasChave);
     this.inputPalavras.nativeElement.value = '';
     let notifica = 'Palavra: ' + palavra + ' adicionada com sucesso!';
     this.notifier.notify('success', notifica);
@@ -250,7 +241,6 @@ export class RecursoAddComponent implements OnInit {
     return this._value;
   }
   set value(value: string[]) {
-    console.log('Set value: ' + value);
     this._value = value;
   }
 
@@ -261,25 +251,21 @@ export class RecursoAddComponent implements OnInit {
   handleDataCriacao(data_criacao: string) {
     let criacaoReplace = data_criacao.replace('-', '');
     this.criacao = parseInt(criacaoReplace.replace('-', ''));
-    console.log('criacao: ', this.criacao);
 
     if (this.criacao > this.registro) {
       this.dataValid = false;
     } else {
       this.dataValid = true;
     }
-    console.log('dataValidCriacao: ', this.dataValid);
   }
   handleDataRegistro(data_registro: string) {
     let registroReplace = data_registro.replace('-', '');
     this.registro = parseInt(registroReplace.replace('-', ''));
-    console.log('registro: ', this.registro);
     if (this.criacao > this.registro) {
       this.dataValid = false;
     } else {
       this.dataValid = true;
     }
-    console.log('dataValidRegistro: ', this.dataValid);
   }
 
   get dataCriacao() {
@@ -288,17 +274,5 @@ export class RecursoAddComponent implements OnInit {
 
   get dataRegistro() {
     return this.form.get('data_registro');
-  }
-
-  get datasValidas(): boolean {
-    console.log(Number(this.form.get('data_criacao')));
-    if (
-      Number(this.form.get('data_criacao')) >
-      Number(this.form.get('data_registro'))
-    ) {
-      return false;
-    } else {
-      return true;
-    }
   }
 }

@@ -29,15 +29,19 @@ export class CursoAddComponent implements OnInit {
     private route: ActivatedRoute,
     private _recursoService: RecursoService,
     notifierService: NotifierService
-  ) {this.notifier = notifierService;}
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit(): void {
-
     this.retrieveAllRecursos();
 
-    this.route.params.pipe(map((params: any) =>  params['id']),
-    switchMap(id => this._cursoService.loadById(id))
-    ).subscribe(curso => this.updateForm(curso));
+    this.route.params
+      .pipe(
+        map((params: any) => params['id']),
+        switchMap((id) => this._cursoService.loadById(id))
+      )
+      .subscribe((curso) => this.updateForm(curso));
 
     this.form = this.formBuilder.group({
       id: [null],
@@ -51,39 +55,39 @@ export class CursoAddComponent implements OnInit {
     });
   }
 
-  updateForm(curso: Curso): void{
-    this.form.patchValue({ 
+  updateForm(curso: Curso): void {
+    this.form.patchValue({
       id: curso.id,
       titulo: curso.titulo,
       descricao: curso.descricao,
       imagem: curso.imagem,
       data_registro: curso.data_registro,
-    })
+    });
   }
 
   onSubmit(): void {
     this.submmited = true;
     if (this.form.valid) {
-        if(this.associarRecurso == false){
-          this._cursoService.postCurso(this.form.value).subscribe(
-            (success) => {
-              this._location.back();
-              this.notifier.notify('success', "Curso salvo com sucesso!");
-            },
-            (error) => console.log(error),
-            () => console.log('request OK')
-          );
-        }
-      else{
-        this._cursoService.postRecursoCurso(this.form.value, this.recursoId).subscribe(
+      if (this.associarRecurso == false) {
+        this._cursoService.postCurso(this.form.value).subscribe(
           (success) => {
             this._location.back();
-            this.notifier.notify('success', "Curso salvo com sucesso!");
+            this.notifier.notify('success', 'Curso salvo com sucesso!');
           },
           (error) => console.log(error),
           () => console.log('request OK')
         );
-
+      } else {
+        this._cursoService
+          .postRecursoCurso(this.form.value, this.recursoId)
+          .subscribe(
+            (success) => {
+              this._location.back();
+              this.notifier.notify('success', 'Curso salvo com sucesso!');
+            },
+            (error) => console.log(error),
+            () => console.log('request OK')
+          );
       }
     }
   }
@@ -96,7 +100,7 @@ export class CursoAddComponent implements OnInit {
     this.associarRecurso = !this.associarRecurso;
     console.log(this.associarRecurso);
   }
-  
+
   retrieveAllRecursos(): void {
     this._cursoService.retrieveAllRecursosLivres().subscribe({
       next: (recurso: any) => {
@@ -108,11 +112,14 @@ export class CursoAddComponent implements OnInit {
     });
   }
 
+  get dataRegistro() {
+    return this.form.get('data_registro');
+  }
+
   onChange(id: number) {
     this.recursoId = id;
   }
 
-  
   getBack(): void {
     this._location.back();
   }

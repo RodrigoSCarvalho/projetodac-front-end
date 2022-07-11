@@ -24,14 +24,18 @@
             Envie o link de uma imagem hospedada online.
           </div>
         </div>
-        <div class="mb-3">
+        <div class="form-group mb-3">
           <label for="datacriacaoInput" class="form-label">Data de Criação</label>
-          <input type="text" class="form-control" mask="0000-00-00" [dropSpecialCharacters]="false" id="datacriacaoInput" formControlName="data_criacao" #criacao (keyup)="handleDataCriacao(criacao.value)" />
+          <input type="text" class="form-control" id="datacriacaoInput" mask="0000-00-00" pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" [dropSpecialCharacters]="false" formControlName="data_criacao" #criacao (blur)="handleDataCriacao(criacao.value)" (keyup)="handleDataCriacao(criacao.value)" />
+          <span class="text-danger" *ngIf="dataCriacao?.invalid && dataCriacao?.touched"> Data de Criação inválida </span>
         </div>
-        <div class="mb-4">
+        <div class=" form-group mb-4">
           <label for="dataregistroInput" class="form-label">Data de Registro</label>
-          <input type="text" class="form-control" id="dataregistroInput" formControlName="data_registro" mask="0000-00-00" [dropSpecialCharacters]="false" #registro (keyup)="handleDataRegistro(registro.value)" />
-          <p class="mb-2 text-secondary fst-italic fw-light" *ngIf="!dataValid">Data de registro deve ser posterior a data de criação</p>
+          <input type="text" class="form-control" id="dataregistroInput" formControlName="data_registro" pattern="([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))" #registro (keyup)="handleDataRegistro(registro.value)" (blur)="handleDataRegistro(registro.value)" mask="0000-00-00" [dropSpecialCharacters]="false" />
+          <span class="text-danger" *ngIf="dataRegistro?.invalid && dataRegistro?.touched"> Data de Registro inválida </span>
+          <div class="form-text text-danger mb-3" *ngIf="!dataValid">
+            Data de Registro precisa ser posterior a data de criação
+          </div>
         </div>
         <div class="mb-3">
           <label for="palavrasChaveInput" class="form-label">Palavras-Chave</label>

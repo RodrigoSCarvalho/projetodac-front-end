@@ -24,7 +24,7 @@ export class EventoAddComponent implements OnInit {
   fim!: number;
   dataValid: boolean = true;
   private readonly notifier: NotifierService;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private _eventoService: EventoService,
@@ -32,10 +32,11 @@ export class EventoAddComponent implements OnInit {
     private route: ActivatedRoute,
     private _recursoService: RecursoService,
     notifierService: NotifierService
-  ) {this.notifier = notifierService;}
+  ) {
+    this.notifier = notifierService;
+  }
 
   ngOnInit(): void {
-
     this.retrieveAllRecursos();
 
     this.route.params
@@ -55,41 +56,43 @@ export class EventoAddComponent implements OnInit {
     });
   }
 
-  updateForm(evento: Evento): void{
-    this.form.patchValue({ 
+  updateForm(evento: Evento): void {
+    this.form.patchValue({
       id: evento.id,
       titulo: evento.titulo,
       descricao: evento.descricao,
       imagem: evento.imagem,
       data_criacao: evento.data_criacao,
       data_fim: evento.data_fim,
-    })
+    });
   }
 
   onSubmit(): void {
     this.submmited = true;
     if (this.form.valid) {
-      if(this.associarRecurso == false){
+      if (this.associarRecurso == false) {
         this._eventoService.postEvento(this.form.value).subscribe(
           (success) => {
             this._location.back();
-            this.notifier.notify('success', "Evento salvo com sucesso!");
+            this.notifier.notify('success', 'Evento salvo com sucesso!');
           },
           (error) => console.log(error),
           () => console.log('request OK')
         );
-      }else{
-        this._eventoService.postRecursoEvento(this.form.value, this.recursoId || 0).subscribe(
-          (success) => {
-            this._location.back();
-            this.notifier.notify('success', "Evento salvo com sucesso!");
-          },
-          (error) => console.log(error),
-          () => console.log('request OK')
-        );
+      } else {
+        this._eventoService
+          .postRecursoEvento(this.form.value, this.recursoId || 0)
+          .subscribe(
+            (success) => {
+              this._location.back();
+              this.notifier.notify('success', 'Evento salvo com sucesso!');
+            },
+            (error) => console.log(error),
+            () => console.log('request OK')
+          );
       }
     }
-    if(this.criacao > this.fim){
+    if (this.criacao > this.fim) {
       this.dataValid = false;
     }
   }
@@ -102,7 +105,7 @@ export class EventoAddComponent implements OnInit {
     this.associarRecurso = !this.associarRecurso;
     console.log(this.associarRecurso);
   }
-  
+
   retrieveAllRecursos(): void {
     this._eventoService.retrieveAllRecursosLivres().subscribe({
       next: (recurso: any) => {
@@ -119,26 +122,33 @@ export class EventoAddComponent implements OnInit {
   }
 
   handleDataCriacao(data_criacao: string) {
-    this.criacao = parseInt(data_criacao.replace("-", ""));
-    console.log("criacao: ", this.criacao);
-    
-    if(this.criacao > this.fim){
+    let criacaoReplace = data_criacao.replace('-', '');
+    this.criacao = parseInt(criacaoReplace.replace('-', ''));
+
+    if (this.criacao > this.fim) {
       this.dataValid = false;
-    }else{
+    } else {
       this.dataValid = true;
     }
-    console.log("dataValidCriacao: ", this.dataValid);
   }
   handleDataFim(data_fim: string) {
-    this.fim = parseInt(data_fim.replace("-", ""));
-    console.log("fim: ", this.fim);
-    if(this.criacao > this.fim){
+    let fimReplace = data_fim.replace('-', '');
+    this.fim = parseInt(fimReplace.replace('-', ''));
+    if (this.criacao > this.fim) {
       this.dataValid = false;
+    } else {
+      this.dataValid = true;
     }
-    console.log("dataValidFim: ", this.dataValid);
   }
 
-  
+  get dataCriacao() {
+    return this.form.get('data_criacao');
+  }
+
+  get dataFim() {
+    return this.form.get('data_fim');
+  }
+
   getBack(): void {
     this._location.back();
   }

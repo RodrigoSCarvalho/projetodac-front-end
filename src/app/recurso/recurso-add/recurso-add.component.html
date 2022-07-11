@@ -97,7 +97,7 @@
           <button type="button" class="btn btn-warning align-center mx-2" (click)="getBack()">
             Voltar
           </button>
-          <button type="submit" class="btn btn-dark align-center mx-2" [disabled]="!form.valid">
+          <button type="submit" class="btn btn-dark align-center mx-2" [disabled]="!form.valid || !dataValid">
             Salvar
           </button>
         </div>
